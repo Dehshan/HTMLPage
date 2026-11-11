@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بناء هب | الشبكة المهنية وسوق البناء والمقاولات والهندسة</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',
+                            primary: '#d97706',
+                            amber: '#f59e0b',
+                            light: '#fffbeb',
+                            accent: '#0284c7'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .step-active {
+            border-color: #f59e0b;
+            background-color: #fffbeb;
+        }
+        .fade-in {
+            animation: fadeIn 0.25s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-slate-900 text-white sticky top-0 z-40 shadow-lg border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 gap-3">
+                <!-- Logo & Brand -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-slate-950 font-extrabold text-xl shadow-md">
+                        <i class="fa-solid fa-helmet-safety"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-xl tracking-wide text-white">Build<span class="text-amber-400">Link</span></span>
+                        <p class="text-[11px] text-slate-400 -mt-1 hidden sm:block">شبكة المقاولات والهندسة والتوريدات</p>
+                    </div>
+                </div>
+
+                <!-- Global Quick Search -->
+                <div class="hidden md:flex flex-1 max-w-md mx-4">
+                    <div class="relative w-full">
+                        <input type="text" id="globalSearchInput" oninput="handleGlobalSearch(this.value)" placeholder="ابحث عن حديد تسليح، سباكة، مكتب هندسي، حفار..." class="w-full bg-slate-800 text-sm text-white placeholder-slate-400 rounded-xl pr-10 pl-4 py-2 border border-slate-700 focus:outline-none focus:border-amber-500 transition">
+                        <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-2.5 text-slate-400 text-sm"></i>
+                    </div>
+                </div>
+
+                <!-- 6 Main Navigation Tabs (Desktop) -->
+                <nav class="hidden lg:flex items-center space-x-1 space-x-reverse">
+                    <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center px-3.5 py-1.5 rounded-xl text-amber-400 bg-slate-800/90 transition">
+                        <i class="fa-solid fa-house text-base"></i>
+                        <span class="text-xs font-semibold mt-0.5">الرئيسية</span>
+                    </button>
+                    <button onclick="switchTab('catalog')" id="nav-catalog" class="nav-btn flex flex-col items-center px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition">
+                        <i class="fa-solid fa-layer-group text-base"></i>
+                        <span class="text-xs font-semibold mt-0.5">المنتجات والخدمات (12)</span>
+                    </button>
+                    <button onclick="switchTab('requests')" id="nav-requests" class="nav-btn flex flex-col items-center px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition relative">
+                        <i class="fa-solid fa-file-signature text-base"></i>
+                        <span class="text-xs font-semibold mt-0.5">طلبات التوريد والخدمات</span>
+                        <span class="absolute top-1 left-2 w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    </button>
+                    <button onclick="switchTab('jobs')" id="nav-jobs" class="nav-btn flex flex-col items-center px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition">
+                        <i class="fa-solid fa-briefcase text-base"></i>
+                        <span class="text-xs font-semibold mt-0.5">الوظائف والعمل</span>
+                    </button>
+                    <button onclick="switchTab('messages')" id="nav-messages" class="nav-btn flex flex-col items-center px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition relative">
+                        <i class="fa-solid fa-comments text-base"></i>
+                        <span class="text-xs font-semibold mt-0.5">الرسائل</span>
+                        <span id="unreadBadge" class="absolute -top-0.5 left-2 bg-rose-500 text-white text-[10px] font-bold px-1.5 rounded-full">3</span>
+                    </button>
+                    <button onclick="switchTab('profile')" id="nav-profile" class="nav-btn flex flex-col items-center px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition">
+                        <i class="fa-solid fa-user-check text-base"></i>
+                        <span class="text-xs font-semibold mt-0.5">الملف الشخصي</span>
+                    </button>
+                </nav>
+
+                <!-- Quick Action: Progressive Account Setup Wizard Button -->
+                <div class="flex items-center gap-2">
+                    <button onclick="openOnboardingModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm px-3 py-2 rounded-xl shadow flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-sliders"></i>
+                        <span>تحديد التخصص التدريجي</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Bottom/Secondary Navigation Bar -->
+        <div class="lg:hidden bg-slate-950 border-t border-slate-800 px-2 py-1.5 flex justify-around items-center overflow-x-auto">
+            <button onclick="switchTab('home')" id="mnav-home" class="mnav-btn flex flex-col items-center px-2 py-1 text-amber-400">
+                <i class="fa-solid fa-house text-sm"></i>
+                <span class="text-[10px] mt-0.5 font-semibold">الرئيسية</span>
+            </button>
+            <button onclick="switchTab('catalog')" id="mnav-catalog" class="mnav-btn flex flex-col items-center px-2 py-1 text-slate-400">
+                <i class="fa-solid fa-layer-group text-sm"></i>
+                <span class="text-[10px] mt-0.5 font-semibold">الأقسام الـ12</span>
+            </button>
+            <button onclick="switchTab('requests')" id="mnav-requests" class="mnav-btn flex flex-col items-center px-2 py-1 text-slate-400">
+                <i class="fa-solid fa-file-signature text-sm"></i>
+                <span class="text-[10px] mt-0.5 font-semibold">الطلبات</span>
+            </button>
+            <button onclick="switchTab('jobs')" id="mnav-jobs" class="mnav-btn flex flex-col items-center px-2 py-1 text-slate-400">
+                <i class="fa-solid fa-briefcase text-sm"></i>
+                <span class="text-[10px] mt-0.5 font-semibold">الوظائف</span>
+            </button>
+            <button onclick="switchTab('messages')" id="mnav-messages" class="mnav-btn flex flex-col items-center px-2 py-1 text-slate-400">
+                <i class="fa-solid fa-comments text-sm"></i>
+                <span class="text-[10px] mt-0.5 font-semibold">الرسائل</span>
+            </button>
+            <button onclick="switchTab('profile')" id="mnav-profile" class="mnav-btn flex flex-col items-center px-2 py-1 text-slate-400">
+                <i class="fa-solid fa-user text-sm"></i>
+                <span class="text-[10px] mt-0.5 font-semibold">حسابي</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ==========================================
+             VIEW 1: الصفحة الرئيسية (HOME - LINKEDIN STYLE)
+             ========================================== -->
+        <section id="view-home" class="view-section fade-in">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Right Sidebar: User Profile Card & Progressive Account Summary -->
+                <div class="lg:col-span-3 space-y-5">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="h-20 bg-gradient-to-l from-slate-900 via-slate-800 to-amber-600 relative">
+                            <span id="sidebarAccTypeBadge" class="absolute top-3 left-3 bg-amber-400 text-slate-950 text-xs font-extrabold px-2.5 py-0.5 rounded-full shadow">
+                                شركة مقاولات
+                            </span>
+                        </div>
+                        <div class="px-5 pb-5 relative">
+                            <div class="w-16 h-16 rounded-2xl bg-slate-900 text-amber-400 border-4 border-white shadow-md -mt-8 flex items-center justify-center text-2xl font-bold">
+                                <i class="fa-solid fa-building-shield"></i>
+                            </div>
+                            <h2 id="sidebarUserName" class="font-bold text-lg text-slate-900 mt-2 flex items-center gap-1.5">
+                                شركة البنيان للمقاولات والتوريدات
+                                <i class="fa-solid fa-circle-check text-sky-500 text-sm" title="حساب موثق"></i>
+                            </h2>
+                            <p id="sidebarUserHeadline" class="text-xs text-slate-500 mt-0.5">مقاولات عامة وتوريد مواد بناء وحديد تسليح</p>
+                            
+                            <!-- Progressive Selection Path Badge -->
+                            <div class="mt-4 p-3 bg-amber-50/80 border border-amber-200 rounded-xl">
+                                <div class="flex items-center justify-between text-xs text-amber-900 font-bold mb-1.5">
+                                    <span>التصنيف المختار تدريجياً:</span>
+                                    <button onclick="openOnboardingModal()" class="text-amber-700 underline hover:text-amber-900">تعديل</button>
+                                </div>
+                                <div class="space-y-1 text-xs">
+                                    <div class="flex items-center gap-1.5 text-slate-700">
+                                        <span class="w-4 h-4 rounded-full bg-slate-800 text-white text-[10px] flex items-center justify-center font-bold">1</span>
+                                        <span>نوع الحساب: <strong id="pathAccountType" class="text-slate-900">مورد / شركة</strong></span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5 text-slate-700">
+                                        <span class="w-4 h-4 rounded-full bg-amber-500 text-slate-950 text-[10px] flex items-center justify-center font-bold">2</span>
+                                        <span>القسم: <strong id="pathMainCat" class="text-slate-900">مواد البناء</strong></span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5 text-slate-700">
+                                        <span class="w-4 h-4 rounded-full bg-emerald-600 text-white text-[10px] flex items-center justify-center font-bold">3</span>
+                                        <span>التخصص: <strong id="pathSpec" class="text-emerald-800">حديد تسليح</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between text-xs text-slate-600">
+                                <div>
+                                    <span class="block font-bold text-slate-900 text-sm">1,420</span>
+                                    <span>متابع وشريك</span>
+                                </div>
+                                <div>
+                                    <span class="block font-bold text-slate-900 text-sm">38</span>
+                                    <span>عرض سعر مرسل</span>
+                                </div>
+                                <div>
+                                    <span class="block font-bold text-slate-900 text-sm">14</span>
+                                    <span>مشروع منفذ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Navigation to 12 Categories -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-bold text-sm text-slate-900 flex items-center gap-1.5">
+                                <i class="fa-solid fa-cubes text-amber-500"></i>
+                                استعراض سريع للأقسام الـ 12
+                            </h3>
+                            <button onclick="switchTab('catalog')" class="text-xs text-amber-600 font-bold hover:underline">عرض الكل</button>
+                        </div>
+                        <div id="homeQuickCategories" class="space-y-1.5 max-h-80 overflow-y-auto pl-1">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Column: Create Post + Feed -->
+                <div class="lg:col-span-6 space-y-5">
+                    <!-- Create Post Box -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+                        <div class="flex gap-3">
+                            <div class="w-11 h-11 rounded-xl bg-slate-900 text-amber-400 flex items-center justify-center font-bold shrink-0">
+                                <i class="fa-solid fa-building-shield"></i>
+                            </div>
+                            <div class="flex-1">
+                                <textarea id="newPostContent" rows="2" placeholder="شارك مشروعاً جديداً، عرض توريد، أو استشارة هندسية مع مجتمع البناء..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-amber-500 resize-none"></textarea>
+                            </div>
+                        </div>
+                        <div class="mt-3 flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-slate-100">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <select id="newPostCategory" class="bg-slate-100 text-slate-700 text-xs font-semibold rounded-lg px-2.5 py-1.5 border border-slate-200 focus:outline-none">
+                                    <!-- Populated with 12 main categories -->
+                                </select>
+                                <select id="newPostType" class="bg-amber-50 text-amber-800 text-xs font-semibold rounded-lg px-2.5 py-1.5 border border-amber-200 focus:outline-none">
+                                    <option value="منشور عام">منشور عام / أخبار</option>
+                                    <option value="سابقة أعمال">سابقة أعمال ومشروع</option>
+                                    <option value="عرض توريد">عرض توريد وسعر</option>
+                                    <option value="استشارة هندسية">استشارة فنية وهندسية</option>
+                                </select>
+                            </div>
+                            <button onclick="createNewPost()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 transition">
+                                <i class="fa-solid fa-paper-plane text-amber-400"></i>
+                                <span>نشر الآن</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filter Feed Bar -->
+                    <div class="flex items-center justify-between bg-white px-4 py-2.5 rounded-xl border border-slate-200 shadow-sm">
+                        <span class="text-xs font-bold text-slate-600">تصفية المنشورات حسب:</span>
+                        <div class="flex gap-1.5 overflow-x-auto">
+                            <button onclick="filterFeed('all')" class="feed-filter-btn bg-slate-900 text-white text-xs px-3 py-1 rounded-lg font-semibold">الكل</button>
+                            <button onclick="filterFeed('مواد البناء')" class="feed-filter-btn bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs px-3 py-1 rounded-lg font-semibold">مواد البناء</button>
+                            <button onclick="filterFeed('المقاولات والتنفيذ')" class="feed-filter-btn bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs px-3 py-1 rounded-lg font-semibold">المقاولات</button>
+                            <button onclick="filterFeed('الهندسة والاستشارات')" class="feed-filter-btn bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs px-3 py-1 rounded-lg font-semibold">الهندسة</button>
+                        </div>
+                    </div>
+
+                    <!-- Posts Feed Container -->
+                    <div id="feedContainer" class="space-y-4">
+                        <!-- Rendered dynamically via JS -->
+                    </div>
+                </div>
+
+                <!-- Left Sidebar: Urgent RFQs & Job Highlights -->
+                <div class="lg:col-span-3 space-y-5">
+                    <!-- Active RFQs Widget -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-bold text-sm text-slate-900 flex items-center gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                طلبات شراء وتوريد عاجلة
+                            </h3>
+                            <button onclick="switchTab('requests')" class="text-xs text-amber-600 font-bold hover:underline">الكل</button>
+                        </div>
+                        <div id="homeRfqWidget" class="space-y-3">
+                            <!-- Populated by JS -->
+                        </div>
+                        <button onclick="openNewRequestModal()" class="mt-3 w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold text-xs py-2 rounded-xl transition flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>أضف طلب منتج أو خدمة</span>
+                        </button>
+                    </div>
+
+                    <!-- How Progressive Taxonomy Works Card -->
+                    <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-4 shadow-md">
+                        <div class="flex items-center gap-2 text-amber-400 font-bold text-sm mb-2">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>التصنيف التدريجي الذكي</span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                            لا نعرض قوائم معقدة دفعة واحدة! يختار المستخدم نوع حسابه، ثم القسم الرئيسي، ثم الفرعي، وصولاً للتخصص الدقيق في 3 خطوات بسيطة.
+                        </p>
+                        <button onclick="switchTab('catalog')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs py-2 rounded-xl transition">
+                            جرب مستكشف الأقسام الـ 12
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==========================================
+             VIEW 2: المنتجات والخدمات (12 CATEGORIES PROGRESSIVE EXPLORER)
+             ========================================== -->
+        <section id="view-catalog" class="view-section hidden fade-in space-y-6">
+            
+            <!-- Header & Action -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full mb-2">
+                        <i class="fa-solid fa-sitemap"></i>
+                        <span>نظام الاختيار التدريجي (3 مستويات)</span>
+                    </div>
+                    <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900">دليل المنتجات والخدمات الشامل (الأقسام الـ 12)</h1>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-1">اختر القسم الرئيسي أولاً، ثم القسم الفرعي، لتظهر لك البنود والتخصصات الدقيقة وعروض الموردين ومقدمي الخدمات.</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <div class="relative">
+                        <input type="text" id="taxonomySearchInput" oninput="searchInTaxonomy(this.value)" placeholder="ابحث عن أي بند (مثال: جبس بورد، كابلات)..." class="bg-slate-50 border border-slate-300 text-slate-800 text-xs sm:text-sm rounded-xl pr-9 pl-3 py-2.5 w-64 focus:outline-none focus:border-amber-500">
+                        <i class="fa-solid fa-magnifying-glass absolute right-3 top-3 text-slate-400 text-xs"></i>
+                    </div>
+                    <button onclick="openAddProductModal()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl flex items-center gap-2 shadow-sm transition">
+                        <i class="fa-solid fa-plus text-amber-400"></i>
+                        <span>إضافة منتج / خدمة</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Instant Search Results Box (Hidden unless searching) -->
+            <div id="taxonomySearchResultsBox" class="hidden bg-amber-50 border border-amber-200 rounded-2xl p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-bold text-amber-900">نتائج البحث المباشر في شجرة الأقسام الـ 12:</h3>
+                    <button onclick="clearTaxonomySearch()" class="text-xs text-amber-700 hover:underline">إغلاق البحث</button>
+                </div>
+                <div id="taxonomySearchResultsList" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <!-- STEP 1: The 12 Main Categories Grid -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-slate-900 text-amber-400 font-extrabold text-sm flex items-center justify-center">1</span>
+                        <h2 class="font-bold text-base sm:text-lg text-slate-900">الخطوة الأولى: اختر القسم الرئيسي (12 قسماً)</h2>
+                    </div>
+                    <span id="selectedMainCatLabel" class="text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200"></span>
+                </div>
+
+                <div id="mainCategoriesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                    <!-- Rendered by JS: 12 Categories -->
+                </div>
+            </div>
+
+            <!-- Contextual Note / Important Disclaimer for Selected Category (e.g., Cat 5, 9, 11) -->
+            <div id="categoryContextNote" class="hidden rounded-2xl p-4 border flex items-start gap-3">
+                <i class="fa-solid fa-circle-info text-lg mt-0.5"></i>
+                <div class="text-xs sm:text-sm leading-relaxed" id="categoryContextNoteText"></div>
+            </div>
+
+            <!-- STEP 2 & STEP 3: Progressive Subcategories & Exact Items -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- STEP 2: Subcategories Column -->
+                <div class="lg:col-span-4 bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-7 h-7 rounded-lg bg-amber-500 text-slate-950 font-extrabold text-sm flex items-center justify-center">2</span>
+                        <div>
+                            <h3 class="font-bold text-base text-slate-900">الخطوة الثانية: القسم الفرعي</h3>
+                            <p class="text-[11px] text-slate-500">الأقسام الفرعية التابعة للقسم المختار</p>
+                        </div>
+                    </div>
+                    <div id="subCategoriesList" class="space-y-2">
+                        <!-- Populated dynamically when a Main Category is clicked -->
+                    </div>
+                </div>
+
+                <!-- STEP 3: Exact Specializations / Items & Matching Marketplace Listings -->
+                <div class="lg:col-span-8 space-y-6">
+                    <!-- Exact Specializations Box -->
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-extrabold text-sm flex items-center justify-center">3</span>
+                                <div>
+                                    <h3 class="font-bold text-base text-slate-900">الخطوة الثالثة: التخصص الدقيق أو البند</h3>
+                                    <p id="step3Subtitle" class="text-[11px] text-slate-500">اختر التخصص الدقيق لتصفية الموردين والمنتجات والخدمات</p>
+                                </div>
+                            </div>
+                            <button onclick="resetItemFilter()" id="resetItemFilterBtn" class="hidden text-xs text-slate-500 hover:text-slate-800 underline">عرض كل بنود القسم الفرعي</button>
+                        </div>
+
+                        <!-- Breadcrumb of Current Progressive Selection -->
+                        <div id="progressiveBreadcrumb" class="mb-4 px-3 py-2 bg-slate-50 rounded-xl border border-slate-200 text-xs flex flex-wrap items-center gap-1.5 text-slate-600">
+                            <!-- Filled by JS -->
+                        </div>
+
+                        <!-- Chips of Exact Items -->
+                        <div id="exactItemsChips" class="flex flex-wrap gap-2">
+                            <!-- Populated dynamically when a Subcategory is clicked -->
+                        </div>
+                    </div>
+
+                    <!-- Matching Products / Services / Providers Cards -->
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-100">
+                            <div>
+                                <h3 class="font-bold text-base text-slate-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-store text-amber-500"></i>
+                                    <span>المنتجات والخدمات والموردون المتاحون</span>
+                                    <span id="catalogMatchCount" class="bg-slate-900 text-amber-400 text-xs px-2.5 py-0.5 rounded-full">0</span>
+                                </h3>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openNewRequestModalWithPreselect()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+                                    <i class="fa-solid fa-bullhorn"></i>
+                                    <span>اطلب عرض سعر في هذا التخصص</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="catalogListingsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Rendered by JS -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==========================================
+             VIEW 3: طلبات المنتجات والخدمات (REQUESTS / RFQs)
+             ========================================== -->
+        <section id="view-requests" class="view-section hidden fade-in space-y-6">
+            <div class="bg-gradient-to-l from-slate-900 via-slate-800 to-slate-900 text-white rounded-2xl p-6 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold px-3 py-1 rounded-full">سوق الطلبات والمناقصات المصغرة (RFQs)</span>
+                    <h1 class="text-xl sm:text-2xl font-extrabold mt-2">طلبات المنتجات والخدمات</h1>
+                    <p class="text-xs sm:text-sm text-slate-300 mt-1">أي شخص أو شركة بحاجة إلى مواد بناء، معدة، مقاول، أو استشارة هندسية ينشر طلبه هنا ليقدم الموردون عروضهم مباشرة.</p>
+                </div>
+                <button onclick="openNewRequestModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm px-5 py-3 rounded-xl shadow-lg flex items-center gap-2 shrink-0 transition">
+                    <i class="fa-solid fa-file-circle-plus"></i>
+                    <span>نشر طلب جديد (توريد / خدمة)</span>
+                </button>
+            </div>
+
+            <!-- Filter Requests Bar -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-xs font-bold text-slate-600">تصفية حسب القسم:</span>
+                    <select id="rfqCategoryFilter" onchange="renderRequestsList()" class="bg-slate-50 border border-slate-200 text-xs font-bold rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
+                        <option value="all">جميع الأقسام الـ 12</option>
+                    </select>
+                </div>
+                <div class="text-xs text-slate-500">
+                    إجمالي الطلبات المفتوحة لتقديم عروض: <strong id="rfqCountBadge" class="text-slate-900">0</strong>
+                </div>
+            </div>
+
+            <!-- Requests Grid -->
+            <div id="requestsListContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- ==========================================
+             VIEW 4: الوظائف وفرص العمل (JOBS & TALENT)
+             ========================================== -->
+        <section id="view-jobs" class="view-section hidden fade-in space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full mb-2">
+                        <i class="fa-solid fa-user-helmet-safety"></i>
+                        <span>بوابة التوظيف الهندسي والفني</span>
+                    </div>
+                    <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900">الوظائف وفرص العمل بقطاع التشييد</h1>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-1">الشركات تنشر الوظائف الشاغرة، والمهندسون والفنيون والعمال ينشرون ملفات بحثهم عن عمل.</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="openJobModal('company')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl flex items-center gap-2 transition">
+                        <i class="fa-solid fa-briefcase text-amber-400"></i>
+                        <span>نشر وظيفة شاغرة (للشركات)</span>
+                    </button>
+                    <button onclick="openJobModal('seeker')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl flex items-center gap-2 transition">
+                        <i class="fa-solid fa-id-card"></i>
+                        <span>أبحث عن عمل (مهندس / فني / عامل)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Toggle Sub-tabs: Company Jobs vs Job Seekers -->
+            <div class="flex border-b border-slate-200 bg-white rounded-t-2xl px-4 pt-3 gap-4">
+                <button onclick="switchJobSubTab('vacancies')" id="jobTab-vacancies" class=" pb-3 px-2 font-bold text-sm border-b-2 border-amber-500 text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-building text-amber-500"></i>
+                    <span>وظائف الشركات والمكاتب الهندسية</span>
+                </button>
+                <button onclick="switchJobSubTab('seekers')" id="jobTab-seekers" class="pb-3 px-2 font-bold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-users-gear text-sky-600"></i>
+                    <span>مهندسون وفنيون وعمال يبحثون عن عمل</span>
+                </button>
+            </div>
+
+            <!-- Jobs Content Container -->
+            <div id="jobsListContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- ==========================================
+             VIEW 5: الرسائل (DIRECT MESSAGES)
+             ========================================== -->
+        <section id="view-messages" class="view-section hidden fade-in">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden h-[75vh] flex flex-col md:flex-row">
+                
+                <!-- Conversations List (Right side in RTL) -->
+                <div class="w-full md:w-80 lg:w-96 border-b md:border-b-0 md:border-l border-slate-200 flex flex-col h-60 md:h-full">
+                    <div class="p-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+                        <h2 class="font-extrabold text-base text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-comments text-amber-500"></i>
+                            <span>المحادثات المباشرة</span>
+                        </h2>
+                        <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-full">تواصل فوري</span>
+                    </div>
+                    <div id="conversationsList" class="flex-1 overflow-y-auto divide-y divide-slate-100">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- Active Chat Area (Left side in RTL) -->
+                <div class="flex-1 flex flex-col h-full bg-slate-50/50">
+                    <!-- Chat Header -->
+                    <div id="activeChatHeader" class="p-4 bg-white border-b border-slate-200 flex items-center justify-between">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- Chat Messages Scroll Area -->
+                    <div id="activeChatMessages" class="flex-1 p-4 overflow-y-auto space-y-3">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- Quick Offer / Input Bar -->
+                    <div class="p-3 bg-white border-t border-slate-200">
+                        <div class="flex items-center gap-1.5 mb-2 overflow-x-auto pb-1">
+                            <span class="text-[11px] text-slate-400 shrink-0">ردود سريعة:</span>
+                            <button onclick="sendQuickReply('أهلاً بك، يمكننا توريد الكمية المطلوبة للموقع غداً صباحاً.')" class="text-[11px] bg-slate-100 hover:bg-amber-50 hover:text-amber-800 text-slate-700 px-2.5 py-1 rounded-full shrink-0 transition">تأكيد إمكانية التوريد</button>
+                            <button onclick="sendQuickReply('مرفق لكم عرض السعر المبدئي شامل النقل والتشوين.')" class="text-[11px] bg-slate-100 hover:bg-amber-50 hover:text-amber-800 text-slate-700 px-2.5 py-1 rounded-full shrink-0 transition">إرسال عرض سعر</button>
+                            <button onclick="sendQuickReply('هل يمكن إرسال جدول الكميات (BOQ) وموقع المشروع؟')" class="text-[11px] bg-slate-100 hover:bg-amber-50 hover:text-amber-800 text-slate-700 px-2.5 py-1 rounded-full shrink-0 transition">طلب جدول الكميات BOQ</button>
+                        </div>
+                        <form onsubmit="handleSendMessage(event)" class="flex items-center gap-2">
+                            <input type="text" id="chatMessageInput" placeholder="اكتب رسالتك أو تفاصيل عرض السعر..." class="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 focus:bg-white">
+                            <button type="submit" class="bg-slate-900 hover:bg-slate-800 text-amber-400 font-bold px-5 py-2.5 rounded-xl flex items-center gap-1.5 text-sm transition">
+                                <span>إرسال</span>
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==========================================
+             VIEW 6: الملف الشخصي (PROFILE & PORTFOLIO)
+             ========================================== -->
+        <section id="view-profile" class="view-section hidden fade-in space-y-6">
+            
+            <!-- Profile Cover & Main Info -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="h-36 bg-gradient-to-l from-slate-900 via-slate-800 to-amber-600 relative p-6 flex items-end justify-end">
+                    <button onclick="openOnboardingModal()" class="bg-white/95 hover:bg-white text-slate-900 font-bold text-xs px-4 py-2 rounded-xl shadow flex items-center gap-2 transition">
+                        <i class="fa-solid fa-pen-to-square text-amber-600"></i>
+                        <span>تعديل نوع الحساب والتخصص التدريجي</span>
+                    </button>
+                </div>
+                <div class="px-6 pb-6">
+                    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-12">
+                        <div class="flex items-end gap-4">
+                            <div class="w-24 h-24 rounded-2xl bg-slate-900 text-amber-400 border-4 border-white shadow-lg flex items-center justify-center text-4xl font-extrabold">
+                                <i class="fa-solid fa-building-shield"></i>
+                            </div>
+                            <div class="pt-2">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h1 id="profileName" class="text-xl sm:text-2xl font-extrabold text-slate-900">شركة البنيان للمقاولات والتوريدات</h1>
+                                    <span id="profileAccountBadge" class="bg-amber-100 text-amber-800 border border-amber-300 text-xs font-bold px-3 py-0.5 rounded-full">مورد / شركة</span>
+                                </div>
+                                <p id="profileBio" class="text-xs sm:text-sm text-slate-600 mt-1">متخصصون في توريد مواد البناء (حديد تسليح، أسمنت) وتنفيذ الأعمال الإنشائية للمشروعات السكنية والتجارية.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openAddProductModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>إضافة منتج / خدمة للملف</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Progressive Classification Tree Display in Profile -->
+                    <div class="mt-6 p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
+                            <span class="font-bold text-slate-700"><i class="fa-solid fa-diagram-project text-amber-500 ml-1"></i> مسار تخصص الحساب:</span>
+                            <span id="profStep1" class="bg-slate-900 text-white px-3 py-1 rounded-lg font-bold">مورد</span>
+                            <i class="fa-solid fa-arrow-left text-slate-400 text-xs"></i>
+                            <span id="profStep2" class="bg-amber-100 text-amber-900 border border-amber-300 px-3 py-1 rounded-lg font-bold">مواد البناء</span>
+                            <i class="fa-solid fa-arrow-left text-slate-400 text-xs"></i>
+                            <span id="profStep3" class="bg-slate-200 text-slate-800 px-3 py-1 rounded-lg font-semibold">حديد ومعادن البناء</span>
+                            <i class="fa-solid fa-arrow-left text-slate-400 text-xs"></i>
+                            <span id="profStep4" class="bg-emerald-100 text-emerald-900 border border-emerald-300 px-3 py-1 rounded-lg font-bold">حديد تسليح</span>
+                        </div>
+                        <div class="text-xs text-slate-500 flex items-center gap-3">
+                            <span><i class="fa-solid fa-location-dot text-amber-500 ml-1"></i> القاهرة، الجيزة، المنيا</span>
+                            <span><i class="fa-solid fa-star text-amber-400 ml-1"></i> 4.9 (86 تقييم)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Sub-sections: Products/Services, Portfolio, Posts -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Right Column: Products & Services Offered -->
+                <div class="lg:col-span-7 space-y-5">
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-base text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-boxes-stacked text-amber-500"></i>
+                                <span>الخدمات والمنتجات المقدمة</span>
+                            </h3>
+                            <button onclick="openAddProductModal()" class="text-xs text-amber-600 font-bold hover:underline">+ إضافة جديد</button>
+                        </div>
+                        <div id="profileProductsList" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Portfolio / Past Works -->
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                        <h3 class="font-bold text-base text-slate-900 flex items-center gap-2 mb-4">
+                            <i class="fa-solid fa-helmet-safety text-amber-500"></i>
+                            <span>الأعمال السابقة والمشاريع المنفذة</span>
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="border border-slate-200 rounded-xl p-3.5 bg-slate-50/60">
+                                <span class="text-[11px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">تم التسليم 2025</span>
+                                <h4 class="font-bold text-sm text-slate-900 mt-2">توريد حديد تسليح وأسمنت لمجمع سكني (12 عمارة)</h4>
+                                <p class="text-xs text-slate-500 mt-1">إجمالي الكميات: 1,800 طن حديد تسليح + 4,500 طن أسمنت مقاوم.</p>
+                            </div>
+                            <div class="border border-slate-200 rounded-xl p-3.5 bg-slate-50/60">
+                                <span class="text-[11px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded">تم التسليم 2024</span>
+                                <h4 class="font-bold text-sm text-slate-900 mt-2">الأعمال الإنشائية والخرسانات لمخازن المنطقة الصناعية</h4>
+                                <p class="text-xs text-slate-500 mt-1">تنفيذ القواعد المسلحة والأرضيات الهليكوبتر والهياكل المعدنية.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Left Column: User's Activity & Posts -->
+                <div class="lg:col-span-5 space-y-5">
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                        <h3 class="font-bold text-base text-slate-900 flex items-center gap-2 mb-4">
+                            <i class="fa-solid fa-newspaper text-amber-500"></i>
+                            <span>منشورات الحساب الأخيرة</span>
+                        </h3>
+                        <div id="profilePostsList" class="space-y-3">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- =================================================================
+         MODAL 1: PROGRESSIVE ACCOUNT ONBOARDING WIZARD (إعداد الحساب التدريجي)
+         ================================================================= -->
+    <div id="onboardingModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden fade-in max-h-[90vh] flex flex-col">
+            <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="font-extrabold text-base sm:text-lg flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-amber-400"></i>
+                        <span>إعداد الحساب واختيار التخصص التدريجي</span>
+                    </h3>
+                    <p class="text-xs text-slate-400">نختار خطوة بخطوة بدون إظهار قوائم معقدة للمستخدم</p>
+                </div>
+                <button onclick="closeOnboardingModal()" class="text-slate-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-5 flex-1">
+                <!-- User / Company Name -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">اسم المستخدم / الشركة / المكتب:</label>
+                    <input type="text" id="wizUserName" value="شركة البنيان للمقاولات والتوريدات" class="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+
+                <!-- Step 1: Account Type (7 Account Types) -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-800 mb-2">
+                        <span class="bg-slate-900 text-amber-400 px-2 py-0.5 rounded ml-1">خطوة 1</span>
+                        اختر صفة الحساب (حساب واحد موحد):
+                    </label>
+                    <div id="wizAccountTypes" class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        <!-- Populated by JS: شخص، شركة، مصنع، مورد، مهندس، مقاول، فني -->
+                    </div>
+                </div>
+
+                <!-- Step 2: Main Category (12 Categories) -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-800 mb-2">
+                        <span class="bg-amber-500 text-slate-950 px-2 py-0.5 rounded ml-1">خطوة 2</span>
+                        اختر القسم الرئيسي (من الأقسام الـ 12):
+                    </label>
+                    <select id="wizMainCategory" onchange="updateWizardSubcategories()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold text-slate-800 focus:outline-none focus:border-amber-500">
+                        <!-- Populated by JS -->
+                    </select>
+                </div>
+
+                <!-- Step 3: Subcategory & Exact Specialization -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 mb-2">
+                            <span class="bg-sky-600 text-white px-2 py-0.5 rounded ml-1">خطوة 3</span>
+                            اختر القسم الفرعي:
+                        </label>
+                        <select id="wizSubCategory" onchange="updateWizardItems()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:border-amber-500">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 mb-2">
+                            <span class="bg-emerald-600 text-white px-2 py-0.5 rounded ml-1">خطوة 4</span>
+                            اختر التخصص الدقيق:
+                        </label>
+                        <select id="wizExactItem" class="w-full bg-emerald-50 border border-emerald-300 rounded-xl px-3.5 py-2.5 text-sm font-bold text-emerald-900 focus:outline-none focus:border-emerald-600">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 px-6 py-3.5 border-t border-slate-200 flex items-center justify-between">
+                <span class="text-xs text-slate-500">سيتم تحديث ملفك الشخصي وتخصيص تجربتك فوراً</span>
+                <button onclick="saveOnboardingWizard()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm px-6 py-2.5 rounded-xl shadow transition">
+                    حفظ التخصص وتحديث الملف
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================================================
+         MODAL 2: ADD PRODUCT / SERVICE MODAL (Progressive 3-Level Selector)
+         ================================================================= -->
+    <div id="addProductModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden fade-in">
+            <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
+                <h3 class="font-extrabold text-base flex items-center gap-2">
+                    <i class="fa-solid fa-box-open text-amber-400"></i>
+                    <span>إضافة منتج أو خدمة جديدة</span>
+                </h3>
+                <button onclick="closeAddProductModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="submitNewProduct(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">عنوان المنتج أو الخدمة:</label>
+                    <input type="text" id="prodTitle" required placeholder="مثال: توريد حديد تسليح عز بأسعار المصنع / أعمال مساح" class="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">1. القسم الرئيسي:</label>
+                        <select id="prodMainCat" onchange="syncProdSubCat()" class="w-full border border-slate-300 rounded-lg px-2 py-2 text-xs font-bold"></select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">2. القسم الفرعي:</label>
+                        <select id="prodSubCat" onchange="syncProdItem()" class="w-full border border-slate-300 rounded-lg px-2 py-2 text-xs font-semibold"></select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">3. التخصص الدقيق:</label>
+                        <select id="prodItem" class="w-full border border-emerald-400 bg-emerald-50 rounded-lg px-2 py-2 text-xs font-bold text-emerald-900"></select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">السعر الاسترشادي / الوحدة:</label>
+                        <input type="text" id="prodPrice" required placeholder="مثال: حسب الكمية / للطن / للمتر" class="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">نطاق التغطية / المدينة:</label>
+                        <input type="text" id="prodLocation" required placeholder="مثال: جميع المحافظات / القاهرة" class="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm">
+                    </div>
+                </div>
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeAddProductModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 bg-slate-100">إلغاء</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-amber-400 hover:bg-slate-800">نشر في الدليل</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =================================================================
+         MODAL 3: NEW REQUEST (RFQ) MODAL
+         ================================================================= -->
+    <div id="newRequestModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden fade-in">
+            <div class="bg-emerald-800 text-white px-6 py-4 flex items-center justify-between">
+                <h3 class="font-extrabold text-base flex items-center gap-2">
+                    <i class="fa-solid fa-file-signature text-amber-300"></i>
+                    <span>نشر طلب شراء منتج أو تنفيذ خدمة</span>
+                </h3>
+                <button onclick="closeNewRequestModal()" class="text-emerald-200 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="submitNewRequest(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">عنوان الطلب:</label>
+                    <input type="text" id="reqTitle" required placeholder="مثال: مطلوب توريد 50 طن أسمنت مقاوم + 20 طن حديد تسليح" class="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">1. القسم الرئيسي:</label>
+                        <select id="reqMainCat" onchange="syncReqSubCat()" class="w-full border border-slate-300 rounded-lg px-2 py-2 text-xs font-bold"></select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">2. القسم الفرعي:</label>
+                        <select id="reqSubCat" onchange="syncReqItem()" class="w-full border border-slate-300 rounded-lg px-2 py-2 text-xs font-semibold"></select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">3. البند المطلوب:</label>
+                        <select id="reqItem" class="w-full border border-emerald-400 bg-emerald-50 rounded-lg px-2 py-2 text-xs font-bold text-emerald-900"></select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">الكمية أو المساحة:</label>
+                        <input type="text" id="reqQty" required placeholder="مثال: 50 طن / 400 متر مربع" class="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">موقع المشروع / التسليم:</label>
+                        <input type="text" id="reqLocation" required placeholder="مثال: التجمع الخامس / المنيا الجديدة" class="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">تفاصيل ومواصفات إضافية:</label>
+                    <textarea id="reqDetails" rows="2" placeholder="اذكر المواصفات الفنية، موعد التوريد المطلوب، وطريقة الدفع..." class="w-full border border-slate-300 rounded-xl p-3 text-sm"></textarea>
+                </div>
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeNewRequestModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 bg-slate-100">إلغاء</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-700 text-white hover:bg-emerald-600">نشر الطلب لاستقبال العروض</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =================================================================
+         MODAL 4: ADD JOB OR JOB SEEKER MODAL
+         ================================================================= -->
+    <div id="jobModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden fade-in">
+            <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
+                <h3 id="jobModalTitle" class="font-extrabold text-base">نشر إعلان وظيفة</h3>
+                <button onclick="closeJobModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="submitJobPost(event)" class="p-6 space-y-4">
+                <input type="hidden" id="jobPostMode" value="company">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">المسمى الوظيفي / التخصص:</label>
+                    <input type="text" id="jobTitleInput" required placeholder="مثال: مهندس مكتب فني BIM / فني كهرباء تحكم آلي" class="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">الجهة / الاسم:</label>
+                        <input type="text" id="jobEntityInput" required placeholder="اسم الشركة أو اسم الباحث عن عمل" class="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">الموقع ونوع الدوام:</label>
+                        <input type="text" id="jobLocationInput" required placeholder="مثال: العاصمة الإدارية - دوام كامل" class="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">التفاصيل والخبرات المطلوبة:</label>
+                    <textarea id="jobDescInput" rows="3" required placeholder="اكتب تفاصيل الفرصة أو سنوات الخبرة..." class="w-full border border-slate-300 rounded-xl p-3 text-sm"></textarea>
+                </div>
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeJobModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 bg-slate-100">إلغاء</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400">نشر الآن</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotice" class="fixed bottom-5 left-5 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 flex items-center gap-2.5 z-50 hidden fade-in">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toastMessage" class="text-xs sm:text-sm font-bold">تمت العملية بنجاح</span>
+    </div>
+
+    <!-- =================================================================
+         COMPLETE JAVASCRIPT APPLICATION & FULL 12-CATEGORY TAXONOMY DATA
+         ================================================================= -->
+    <script>
+        /* -----------------------------------------------------------------
+           1. COMPLETE 12-CATEGORY TAXONOMY DATA (ALL SUBCATEGORIES & ITEMS)
+           ----------------------------------------------------------------- */
+        const TAXONOMY_DATA = [
+            {
+                id: "cat-1",
+                name: "مواد البناء",
+                icon: "fa-cubes",
+                color: "amber",
+                note: null,
+                subcategories: [
+                    { name: "حديد ومعادن البناء", items: ["حديد تسليح", "سلك رباط", "شبك حديد", "قطاعات حديد", "صاج وألواح معدنية", "زوايا ومواسير حديد"] },
+                    { name: "الأسمنت والخرسانة", items: ["أسمنت عادي وأبيض", "أسمنت مقاوم للأملاح", "خرسانة جاهزة", "خرسانة مسبقة الصب", "إضافات الخرسانة", "مونة جاهزة"] },
+                    { name: "الرمل والزلط والركام", items: ["رمل بناء", "رمل مغسول", "زلط", "سن", "ركام للخرسانة", "تربة إحلال"] },
+                    { name: "الطوب والبلوك", items: ["طوب أحمر طفلي", "طوب أسمنتي", "بلوك خرساني", "بلوك أبيض AAC", "طوب حراري", "طوب وردي"] },
+                    { name: "الأحجار ومواد الواجهات", items: ["حجر طبيعي", "حجر هاشمي", "حجر مايكا", "حجر صناعي", "جرانيت خام", "ألواح واجهات"] },
+                    { name: "مواد البناء الحديثة", items: ["ألواح وأسقف جاهزة", "ألواح ساندوتش بانل", "ألواح جبسية", "ألواح أسمنتية", "مواد بناء مسبقة التصنيع", "منتجات GRC وGRP"] },
+                    { name: "مواد العزل", items: ["عزل مائي", "عزل حراري", "عزل صوتي", "لفائف بيتومين", "مواد عزل إسمنتية", "فوم عازل", "مواد حقن ومعالجة الشروخ"] },
+                    { name: "مواد البناء الإضافية", items: ["الجير", "الجبس الخام", "مواد تثبيت ومونة", "مواد معالجة الخرسانة", "مواد ملء الفواصل"] }
+                ]
+            },
+            {
+                id: "cat-2",
+                name: "السباكة والمياه والصرف الصحي",
+                icon: "fa-faucet-drip",
+                color: "sky",
+                note: null,
+                subcategories: [
+                    { name: "تأسيس السباكة", items: ["مواسير مياه", "مواسير صرف صحي", "مواسير PPR", "مواسير PVC وUPVC", "مواسير PEX", "وصلات وأكواع وتيهات", "محابس وصمامات", "مستلزمات تثبيت المواسير"] },
+                    { name: "الأدوات الصحية", items: ["أطقم حمامات", "قواعد تواليت", "أحواض حمامات", "خلاطات مياه", "دش وشاور", "بانيو وجاكوزي", "كبائن شاور", "إكسسوارات الحمام", "أحواض مطابخ", "أحواض ستانلس ستيل"] },
+                    { name: "شبكات المياه", items: ["خزانات مياه", "عدادات مياه", "فلاتر ومحطات تنقية", "مواتير رفع المياه", "طلمبات مياه", "طلمبات غاطسة", "طلمبات أعماق", "عوامات ومستلزمات الخزانات"] },
+                    { name: "الصرف الصحي", items: ["أغطية غرف التفتيش", "أغطية بالوعات", "مصارف أرضية", "غرف تفتيش جاهزة", "مصائد شحوم", "طلمبات صرف", "أنظمة رفع مياه الصرف"] },
+                    { name: "أنظمة مكافحة الحريق المرتبطة بالمياه", items: ["مواسير الحريق", "محابس الحريق", "رشاشات إطفاء مائية", "خراطيم ومستلزمات الحريق"] },
+                    { name: "خدمات السباكة", items: ["تأسيس سباكة", "تشطيب سباكة", "تركيب الأدوات الصحية", "كشف تسربات", "تسليك وصيانة الصرف", "صيانة الطلمبات والخزانات"] }
+                ]
+            },
+            {
+                id: "cat-3",
+                name: "الكهرباء والطاقة",
+                icon: "fa-bolt",
+                color: "yellow",
+                note: null,
+                subcategories: [
+                    { name: "تأسيس الكهرباء", items: ["أسلاك كهرباء", "كابلات كهرباء", "مواسير كهرباء", "علب دفن وتوصيل", "خراطيم كهرباء", "علب توزيع", "مستلزمات التثبيت والتوصيل"] },
+                    { name: "لوحات ومكونات الكهرباء", items: ["لوحات توزيع", "قواطع كهربائية", "كونتاكتورات وريليهات", "مفاتيح فصل", "محولات كهربائية", "لوحات تحكم", "أنظمة التحكم في المحركات"] },
+                    { name: "التشطيب والإنارة", items: ["مفاتيح وبرايز", "وحدات إنارة داخلية", "وحدات إنارة خارجية", "كشافات", "إنارة طوارئ", "إنارة ديكورية", "أنظمة تحكم في الإضاءة"] },
+                    { name: "الطاقة الشمسية", items: ["ألواح شمسية", "محولات الطاقة الشمسية", "بطاريات تخزين", "هياكل تثبيت الألواح", "منظمات شحن", "أنظمة طاقة شمسية متكاملة", "تركيب وصيانة الأنظمة الشمسية"] },
+                    { name: "مصادر الطاقة الاحتياطية", items: ["مولدات كهرباء", "مولدات ديزل", "وحدات UPS", "بطاريات احتياطية", "أنظمة تحويل تلقائي ATS"] },
+                    { name: "التيار الخفيف", items: ["كاميرات مراقبة", "أنظمة إنذار السرقة", "إنذار الحريق", "أنظمة التحكم في الدخول", "إنتركم", "شبكات الإنترنت والبيانات", "أنظمة الصوت العام"] },
+                    { name: "خدمات الكهرباء", items: ["تأسيس كهرباء", "تشطيب كهرباء", "تركيب لوحات", "تمديد كابلات", "اختبار وفحص كهربائي", "صيانة أعطال الكهرباء"] }
+                ]
+            },
+            {
+                id: "cat-4",
+                name: "التشطيبات والديكور",
+                icon: "fa-paint-roller",
+                color: "purple",
+                note: null,
+                subcategories: [
+                    { name: "الأرضيات", items: ["سيراميك", "بورسلين", "باركيه", "أرضيات فينيل", "أرضيات إيبوكسي", "أرضيات مطاطية", "أرضيات مرتفعة"] },
+                    { name: "الرخام والجرانيت", items: ["رخام طبيعي للتشطيب", "رخام صناعي", "جرانيت", "رخام السلالم", "رخام المطابخ", "رخام الواجهات"] },
+                    { name: "الدهانات والحوائط", items: ["دهانات داخلية", "دهانات خارجية", "دهانات ديكورية", "معجون حوائط", "ورق حائط", "بدائل الرخام والخشب", "ألواح حائط ديكورية"] },
+                    { name: "الأسقف والجبس", items: ["جبس بورد", "كرانيش جبس", "أسقف معلقة", "أسقف معدنية", "أسقف ديكورية", "مستلزمات تركيب الجبس بورد"] },
+                    { name: "الأبواب والشبابيك", items: ["أبواب خشب", "أبواب أمان", "أبواب UPVC", "أبواب ألومنيوم", "شبابيك ألومنيوم", "شبابيك UPVC", "إكسسوارات وأقفال"] },
+                    { name: "الواجهات والتكسية", items: ["واجهات حجر", "واجهات كلادينج", "واجهات زجاج", "واجهات HPL", "واجهات GRC", "ألواح ديكورية خارجية"] },
+                    { name: "المطابخ والنجارة", items: ["مطابخ جاهزة", "تفصيل مطابخ", "دواليب ووحدات تخزين", "أسطح مطابخ", "أعمال نجارة داخلية"] },
+                    { name: "الزجاج والمرايا", items: ["زجاج سيكوريت", "زجاج مزدوج", "واجهات زجاجية", "مرايا", "كبائن زجاجية"] },
+                    { name: "خدمات التشطيب", items: ["تشطيب شقق", "تشطيب إداري وتجاري", "تركيب سيراميك وبورسلين", "أعمال دهانات", "تركيب جبس بورد", "أعمال نجارة", "تصميم وتنفيذ ديكور"] }
+                ]
+            },
+            {
+                id: "cat-5",
+                name: "الهندسة والاستشارات",
+                icon: "fa-compass-drafting",
+                color: "indigo",
+                note: "ملاحظة هامة: التراخيص والاعتمادات الرسمية تظل خاضعة لاشتراطات الجهات المختصة والنقابات الهندسية ومؤهلات مقدم الخدمة.",
+                subcategories: [
+                    { name: "الهندسة المعمارية", items: ["تصميم معماري", "تصميم واجهات", "تصميم داخلي", "إعداد الرسومات التنفيذية", "نمذجة معلومات البناء BIM", "تصميم ثلاثي الأبعاد"] },
+                    { name: "الهندسة الإنشائية والمدنية", items: ["تصميم إنشائي", "تصميم الأساسات", "تصميم المنشآت الخرسانية", "تصميم المنشآت المعدنية", "مراجعة الرسومات الإنشائية", "تقارير السلامة الإنشائية"] },
+                    { name: "الهندسة الكهروميكانيكية MEP", items: ["تصميم الكهرباء", "تصميم السباكة والصرف", "تصميم التكييف والتهوية", "تصميم أنظمة مكافحة الحريق", "تنسيق الأعمال الكهروميكانيكية"] },
+                    { name: "المساحة والأعمال الجيولوجية", items: ["رفع مساحي", "توقيع محاور ومناسيب", "أعمال GPS وTotal Station", "جسات التربة", "اختبارات التربة", "اختبارات المواد"] },
+                    { name: "حصر الكميات والتكاليف", items: ["حصر كميات", "إعداد BOQ", "تسعير المشروعات", "إعداد مقايسات", "تقدير الميزانيات", "مراجعة المستخلصات"] },
+                    { name: "إدارة المشروعات", items: ["تخطيط وجدولة المشروعات", "إدارة التكاليف", "إدارة العقود", "إدارة المخاطر", "متابعة التنفيذ", "إدارة الجودة"] },
+                    { name: "الإشراف والاستشارات", items: ["إشراف هندسي", "استشارات فنية", "مراجعة التصميمات", "استلام الأعمال", "تقارير فنية", "مراجعة ومطابقة المواصفات"] },
+                    { name: "التراخيص والدراسات", items: ["إعداد ملفات التراخيص", "دراسات الجدوى الفنية", "دراسات الأثر البيئي", "دراسات المرور", "دراسات البنية التحتية"] },
+                    { name: "خدمات البرامج الهندسية", items: ["رسم AutoCAD", "نمذجة Revit", "أعمال BIM", "إعداد المخططات التنفيذية", "إعداد لوحات Shop Drawings"] }
+                ]
+            },
+            {
+                id: "cat-6",
+                name: "المقاولات والتنفيذ",
+                icon: "fa-helmet-safety",
+                color: "orange",
+                note: null,
+                subcategories: [
+                    { name: "مقاولات المباني", items: ["إنشاء مبانٍ سكنية", "إنشاء مبانٍ إدارية وتجارية", "إنشاء مصانع ومخازن", "إنشاء فيلات", "إنشاء مبانٍ خدمية"] },
+                    { name: "الأعمال الإنشائية", items: ["حفر وتجهيز الموقع", "أعمال إحلال وردم", "أعمال الأساسات", "أعمال الخرسانة", "أعمال المباني والطوب", "أعمال الهياكل المعدنية", "أعمال التدعيم والترميم الإنشائي"] },
+                    { name: "مقاولات التشطيبات", items: ["تشطيب كامل", "تشطيب داخلي", "تشطيب خارجي", "تشطيب واجهات", "تشطيب وحدات تجارية وإدارية"] },
+                    { name: "مقاولات البنية التحتية", items: ["إنشاء الطرق", "رصف الطرق", "شبكات مياه الشرب", "شبكات الصرف الصحي", "شبكات تصريف الأمطار", "شبكات الكهرباء", "شبكات الاتصالات", "أعمال الحفر والردم"] },
+                    { name: "أعمال الموقع العام", items: ["تنسيق المواقع", "رصف الممرات والساحات", "أسوار وبوابات", "مواقف السيارات", "أعمال اللاندسكيب"] },
+                    { name: "مقاولات صناعية", items: ["إنشاء المصانع", "إنشاء المخازن", "تركيب خطوط الإنتاج", "تنفيذ الهياكل المعدنية", "تجهيز المواقع الصناعية"] },
+                    { name: "الترميم والصيانة", items: ["ترميم المباني", "معالجة الشروخ", "إصلاح الخرسانة", "تجديد المباني القديمة", "معالجة الرطوبة", "صيانة المنشآت"] },
+                    { name: "مقاولات متخصصة", items: ["أعمال العزل", "أعمال الهدم والإزالة", "أعمال الخوازيق", "أعمال الشدات والسقالات", "تركيب الواجهات", "تنفيذ حمامات السباحة"] }
+                ]
+            },
+            {
+                id: "cat-7",
+                name: "المعدات والآلات",
+                icon: "fa-truck-monster",
+                color: "amber",
+                note: null,
+                subcategories: [
+                    { name: "معدات الحفر والتحميل", items: ["حفارات", "لوادر", "بلدوزرات", "جريدرات", "معدات دك التربة", "معدات تسوية الأراضي"] },
+                    { name: "معدات الرفع", items: ["أوناش برجية", "أوناش متحركة", "أوناش شوكية", "ونش أفراد ومواد", "أوناش تحميل وتنزيل"] },
+                    { name: "معدات الخرسانة", items: ["مضخات خرسانة", "خلاطات خرسانة", "هزازات خرسانة", "معدات قص الخرسانة", "معدات اختبار الخرسانة"] },
+                    { name: "معدات الطرق", items: ["معدات رصف الأسفلت", "مداحل طرق", "معدات تخطيط الطرق", "معدات فرش الأسفلت"] },
+                    { name: "معدات وأدوات البناء", items: ["شنيور وهيلتي", "صاروخ قطع وتجليخ", "معدات لحام", "معدات قص وثني الحديد", "سقالات", "شدات معدنية", "سلالم ومنصات عمل"] },
+                    { name: "معدات الطاقة والتشغيل", items: ["مولدات متنقلة", "ضواغط هواء", "معدات ضخ المياه", "معدات لحام صناعية", "معدات تشغيل كهربائية"] },
+                    { name: "بيع وتأجير المعدات", items: ["معدات جديدة", "معدات مستعملة", "تأجير معدات بالساعات", "تأجير معدات باليوم", "تأجير معدات بالشهر", "تأجير مع مشغل"] },
+                    { name: "الصيانة وقطع الغيار", items: ["قطع غيار معدات", "صيانة معدات ثقيلة", "صيانة محركات", "صيانة أنظمة هيدروليك", "صيانة معدات كهربائية"] }
+                ]
+            },
+            {
+                id: "cat-8",
+                name: "التكييف والأنظمة الفنية",
+                icon: "fa-fan",
+                color: "cyan",
+                note: null,
+                subcategories: [
+                    { name: "التكييف", items: ["تكييف سبليت", "تكييف مركزي", "تكييف VRF وVRV", "وحدات مناولة الهواء", "وحدات Fan Coil", "وحدات تبريد تجارية"] },
+                    { name: "التهوية", items: ["مراوح شفط", "مراوح صناعية", "مجاري الهواء Ducts", "فلاتر الهواء", "أنظمة تهوية الجراجات", "أنظمة سحب الدخان"] },
+                    { name: "التبريد", items: ["غرف تبريد", "غرف تجميد", "وحدات تكثيف", "مبردات مياه Chillers", "أنظمة تبريد المصانع"] },
+                    { name: "مكافحة الحريق", items: ["أنظمة إطفاء مائي", "أنظمة إطفاء بالغاز", "طفايات حريق", "مضخات حريق", "أنظمة إنذار الحريق", "أنظمة سحب الدخان"] },
+                    { name: "المصاعد والسلالم المتحركة", items: ["مصاعد ركاب", "مصاعد بضائع", "مصاعد طبية", "سلالم متحركة", "منصات رفع", "قطع غيار المصاعد"] },
+                    { name: "أنظمة البخار والغلايات", items: ["غلايات بخار", "مولدات بخار", "مواسير بخار", "صمامات البخار", "مصائد البخار", "أنظمة معالجة مياه الغلايات"] },
+                    { name: "أنظمة التحكم بالمباني", items: ["أنظمة BMS", "أنظمة التحكم في التكييف", "حساسات الحرارة والرطوبة", "أنظمة إدارة الطاقة", "أنظمة التحكم الآلي"] },
+                    { name: "التركيب والصيانة", items: ["تركيب تكييف", "صيانة تكييف", "تنظيف مجاري الهواء", "تركيب أنظمة مكافحة الحريق", "صيانة المصاعد", "صيانة الغلايات"] }
+                ]
+            },
+            {
+                id: "cat-9",
+                name: "المصانع والتوريدات",
+                icon: "fa-industry",
+                color: "slate",
+                note: "توضيح: هذا القسم مناسب للمصنع أو المورد الذي يقدم منتجات صناعية أو توريدات متخصصة للمشروعات والمصانع، حتى لو لم تكن ضمن مواد البناء التقليدية.",
+                subcategories: [
+                    { name: "مصانع منتجات البناء", items: ["مصانع الطوب والبلوك", "مصانع الخرسانة الجاهزة", "مصانع المنتجات الأسمنتية", "مصانع الأبواب والشبابيك", "مصانع الكابلات والأسلاك", "مصانع المواسير والوصلات"] },
+                    { name: "المنتجات المعدنية", items: ["منتجات الحديد المشغول", "قطاعات معدنية", "خزانات معدنية", "هياكل معدنية", "منتجات الألومنيوم", "منتجات الستانلس ستيل"] },
+                    { name: "المنتجات البلاستيكية", items: ["مواسير بلاستيك", "وصلات بلاستيك", "خزانات بلاستيك", "منتجات PVC وUPVC", "منتجات العزل البلاستيكية"] },
+                    { name: "المستلزمات الصناعية", items: ["محامل ورولمان بلي", "سيور صناعية", "تروس ومكونات حركة", "خراطيم صناعية", "صمامات صناعية", "فلاتر صناعية"] },
+                    { name: "معدات ومكونات المصانع", items: ["مواتير كهربائية", "مضخات صناعية", "ضواغط هواء", "لوحات تحكم", "حساسات صناعية", "أنظمة تحكم آلي"] },
+                    { name: "التوريدات", items: ["توريدات شركات ومشروعات", "توريدات حكومية", "توريدات بالجملة", "توريدات حسب الطلب", "توريد مستلزمات مواقع العمل", "توريد مستلزمات المصانع"] },
+                    { name: "التصنيع حسب الطلب", items: ["تصنيع هياكل معدنية", "تشغيل معادن", "قص وثني صاج", "خراطة وفريزة", "تصنيع قطع غيار", "تصنيع منتجات بمواصفات خاصة"] }
+                ]
+            },
+            {
+                id: "cat-10",
+                name: "النقل واللوجستيات",
+                icon: "fa-truck-fast",
+                color: "emerald",
+                note: null,
+                subcategories: [
+                    { name: "نقل مواد البناء", items: ["نقل أسمنت", "نقل حديد", "نقل طوب", "نقل رمل وزلط", "نقل خرسانة ومستلزماتها", "نقل مواد تشطيب"] },
+                    { name: "نقل المعدات", items: ["نقل معدات ثقيلة", "نقل حفارات ولوادر", "نقل أوناش ومعدات رفع", "نقل معدات المصانع", "نقل الحاويات"] },
+                    { name: "المركبات", items: ["سيارات نقل خفيف", "نقل متوسط وثقيل", "قلابات", "تريلات", "لوابد نقل معدات", "سيارات نقل برافعة", "خلاطات خرسانة متنقلة"] },
+                    { name: "النقل داخل المواقع", items: ["نقل مخلفات البناء", "نقل ناتج الحفر", "تحميل وتنزيل مواد", "نقل بين المخازن والمواقع"] },
+                    { name: "الشحن والتخزين", items: ["شحن بري", "شحن بحري", "شحن جوي", "نقل بين المحافظات", "نقل دولي", "تخزين مواد ومعدات", "مستودعات ومخازن"] },
+                    { name: "خدمات النقل", items: ["تأجير سيارة نقل", "نقل بالرحلة", "نقل بالطن", "نقل بالمشوار", "نقل مع تحميل وتنزيل", "خدمات تخليص جمركي"] }
+                ]
+            },
+            {
+                id: "cat-11",
+                name: "الفنيون والصيانة",
+                icon: "fa-screwdriver-wrench",
+                color: "teal",
+                note: "ملحوظة مهمة: هذا القسم مخصص للشخص أو الفريق الذي يقدم شغلاً فنياً مباشراً وسابقة أعماله. أما الشركة التي تنفذ مبنى كاملاً فمكانها «المقاولات والتنفيذ»، وإعلان «مطلوب فني للعمل» مكانه صفحة «الوظائف وفرص العمل».",
+                subcategories: [
+                    { name: "فنيون في أعمال البناء", items: ["بنّاء", "حداد مسلح", "نجار مسلح", "مبلط", "محار", "عامل عزل", "فني واجهات"] },
+                    { name: "فنيون في التشطيبات", items: ["نقاش", "فني جبس بورد", "نجار", "فني ألومنيوم", "فني زجاج", "فني رخام وجرانيت", "فني تركيب أبواب"] },
+                    { name: "فنيون في الكهرباء", items: ["كهربائي منازل", "كهربائي مبانٍ", "فني لوحات كهرباء", "فني كابلات", "فني طاقة شمسية", "فني كاميرات وشبكات"] },
+                    { name: "فنيون في السباكة", items: ["سباك تأسيس", "سباك تشطيب", "فني طلمبات", "فني خزانات", "فني كشف تسربات", "فني شبكات مياه وصرف"] },
+                    { name: "فنيون في الأنظمة الفنية", items: ["فني تكييف", "فني تبريد", "فني مصاعد", "فني مكافحة حريق", "فني غلايات وبخار", "فني تحكم آلي"] },
+                    { name: "فنيون صناعيون", items: ["فني لحام", "فني خراطة", "فني تشغيل ماكينات", "فني هيدروليك", "فني صيانة ميكانيكية", "فني صيانة كهربائية"] },
+                    { name: "العمالة المساعدة", items: ["عمال بناء", "عمال تحميل وتنزيل", "عمال نظافة مواقع", "عمال هدم وإزالة", "عمال مخازن", "مساعدين فنيين"] },
+                    { name: "الصيانة والإصلاح", items: ["صيانة منزلية", "صيانة مبانٍ", "صيانة معدات", "صيانة شبكات المياه", "صيانة الكهرباء", "صيانة الأبواب والشبابيك"] }
+                ]
+            },
+            {
+                id: "cat-12",
+                name: "العقارات والأراضي",
+                icon: "fa-city",
+                color: "rose",
+                note: null,
+                subcategories: [
+                    { name: "عقارات سكنية للبيع", items: ["شقق", "دوبلكس", "بنتهاوس", "فيلات", "تاون هاوس وتوين هاوس", "عمارات سكنية"] },
+                    { name: "عقارات سكنية للإيجار", items: ["شقق", "فيلات", "وحدات مفروشة", "سكن للعمال", "سكن للموظفين"] },
+                    { name: "عقارات تجارية وإدارية", items: ["محلات", "مكاتب إدارية", "عيادات", "مقرات شركات", "مولات ومراكز تجارية"] },
+                    { name: "عقارات صناعية ومخازن", items: ["مصانع للبيع", "مصانع للإيجار", "مخازن", "مستودعات", "ورش صناعية", "وحدات لوجستية"] },
+                    { name: "الأراضي", items: ["أراضٍ سكنية", "أراضٍ تجارية", "أراضٍ صناعية", "أراضٍ زراعية", "أراضٍ مخصصة للمشروعات"] },
+                    { name: "المشروعات والاستثمار", items: ["مشروعات للبيع", "مشروعات تحت الإنشاء", "مشاركة في مشروع", "فرص استثمار عقاري", "شراكة في تطوير عقار"] },
+                    { name: "عقارات متخصصة", items: ["جراجات ومواقف", "مبانٍ إدارية كاملة", "مبانٍ تجارية كاملة", "مدافن ومقابر"] },
+                    { name: "خدمات عقارية", items: ["تسويق عقاري", "إدارة أملاك", "تقييم عقاري", "إدارة وتأجير وحدات", "استشارات عقارية"] }
+                ]
+            }
+        ];
+
+        const ACCOUNT_TYPES = ["شخص", "شركة", "مصنع", "مورد", "مهندس", "مقاول", "فني"];
+
+        /* -----------------------------------------------------------------
+           2. APPLICATION STATE & SAMPLE REALISTIC DATA
+           ----------------------------------------------------------------- */
+        let currentState = {
+            activeTab: 'home',
+            selectedMainCatIndex: 0,
+            selectedSubCatIndex: 0,
+            selectedExactItem: null, // null means all items in subcategory
+            jobSubTab: 'vacancies',
+            activeChatId: 1,
+            userProfile: {
+                name: "شركة البنيان للمقاولات والتوريدات",
+                accountType: "مورد",
+                mainCat: "مواد البناء",
+                subCat: "حديد ومعادن البناء",
+                exactItem: "حديد تسليح"
+            }
+        };
+
+        let postsData = [
+            {
+                id: 101,
+                author: "مكتب الرؤية للاستشارات الهندسية (BIM)",
+                role: "مهندس / مكتب استشاري",
+                category: "الهندسة والاستشارات",
+                spec: "نمذجة معلومات البناء BIM",
+                badge: "سابقة أعمال",
+                time: "منذ ساعتين",
+                content: "تم بحمد الله الانتهاء من إعداد المخططات التنفيذية (Shop Drawings) وتنسيق الأعمال الكهروميكانيكية MEP لمشروع مول تجاري وإداري بمساحة 14,000 م2 باستخدام تقنية Revit & BIM لتفادي التعارضات قبل الصب.",
+                likes: 48,
+                comments: 12,
+                liked: false
+            },
+            {
+                id: 102,
+                author: "مصنع الدلتا للمنتجات الأسمنتية والبلوك",
+                role: "مصنع",
+                category: "مواد البناء",
+                spec: "بلوك خرساني",
+                badge: "عرض توريد",
+                time: "منذ 4 ساعات",
+                content: "متاح الآن توريد طوب أسمنتي مصمت ومفرغ وبلوك أبيض عازل AAC مطابق للمواصفات القياسية مع شهادة اختبار مقاومة الضغط. أسطول نقل جاهز للتوريد المباشر للمواقع في جميع المحافظات.",
+                likes: 35,
+                comments: 9,
+                liked: false
+            },
+            {
+                id: 103,
+                author: "شركة البنيان للمقاولات والتوريدات",
+                role: "مورد",
+                category: "مواد البناء",
+                spec: "حديد تسليح",
+                badge: "عرض توريد",
+                time: "منذ يوم",
+                content: "تحديث أسعار التوريد للمشروعات: متوفر حديد تسليح جميع الأقطار (10مم إلى 32مم) وسلك رباط وشبك حديد. تسليم فوري على أرض الموقع مع تسهيلات للشركات والمقاولين.",
+                likes: 64,
+                comments: 21,
+                liked: true
+            }
+        ];
+
+        let catalogListings = [
+            { id: 1, title: "توريد حديد تسليح جميع الأقطار جملة وقطاعي", provider: "شركة البنيان للمقاولات والتوريدات", accType: "مورد", mainCat: "مواد البناء", subCat: "حديد ومعادن البناء", item: "حديد تسليح", price: "سعر المصنع / للطن", location: "القاهرة والمحافظات" },
+            { id: 2, title: "خرسانة جاهزة بجميع الاجهادات مع مضخات", provider: "محطة النيل للخرسانة الجاهزة", accType: "مصنع", mainCat: "مواد البناء", subCat: "الأسمنت والخرسانة", item: "خرسانة جاهزة", price: "حسب الإجهاد والمتر المكعب", location: "أكتوبر والشيخ زايد" },
+            { id: 3, title: "لفائف بيتومين وعزل مائي وحراري للأسطح واللبشة", provider: "الرواد لمواد العزل الحديثة", accType: "مورد", mainCat: "مواد البناء", subCat: "مواد العزل", item: "عزل مائي", price: "توريد وتركيب بالمتر", location: "جميع المحافظات" },
+            { id: 4, title: "مواسير ووصلات PPR و PVC معتمدة بضمان 10 سنوات", provider: "المتحدة لتوريدات السباكة", accType: "مورد", mainCat: "السباكة والمياه والصرف الصحي", subCat: "تأسيس السباكة", item: "مواسير PPR", price: "خصم 18% للمشروعات", location: "القاهرة والدلتا" },
+            { id: 5, title: "تصميم وتجميع لوحات توزيع وتحكم كهربائية ATS & MDB", provider: "شركة الطاقة للأنظمة الكهربائية", accType: "شركة", mainCat: "الكهرباء والطاقة", subCat: "لوحات ومكونات الكهرباء", item: "لوحات توزيع", price: "حسب المقايسة", location: "العاشر من رمضان" },
+            { id: 6, title: "تركيب وتوريد جبس بورد وأسقف معلقة حديثة", provider: "الماسة للتشطيبات والديكور", accType: "مقاول", mainCat: "التشطيبات والديكور", subCat: "الأسقف والجبس", item: "جبس بورد", price: "بالمتر الطولي والمربع", location: "القاهرة والجيزة" },
+            { id: 7, title: "إعداد حصر كميات دقيق BOQ ومقايسات وتسعير مناقصات", provider: "م. أحمد طارق - استشاري تكاليف", accType: "مهندس", mainCat: "الهندسة والاستشارات", subCat: "حصر الكميات والتكاليف", item: "إعداد BOQ", price: "بالدراسة والمشروع", location: "عمل عن بعد / زيارات" },
+            { id: 8, title: "تنفيذ أعمال الخرسانات والهيكل الخرساني والمباني", provider: "دار التعمير للمقاولات المتكاملة", accType: "مقاول", mainCat: "المقاولات والتنفيذ", subCat: "الأعمال الإنشائية", item: "أعمال الخرسانة", price: "مصنعيات أو مونة وأجرة", location: "الصعيد والقاهرة" },
+            { id: 9, title: "تأجير حفارات ولوادر وأوناش تلسكوبيه باليوم والشهر", provider: "العملاق للمعدات الثقيلة", accType: "شركة", mainCat: "المعدات والآلات", subCat: "معدات الحفر والتحميل", item: "حفارات", price: "إيجار يومي / شهري مع مشغل", location: "جميع المواقع" },
+            { id: 10, title: "توريد وتركيب أنظمة تكييف مركزي VRF ومجاري هواء", provider: "كول تك للتكييف والأنظمة", accType: "شركة", mainCat: "التكييف والأنظمة الفنية", subCat: "التكييف", item: "تكييف VRF وVRV", price: "حسب الأحمال الحرارية", location: "القاهرة والإسكندرية" },
+            { id: 11, title: "تصنيع هياكل معدنية وجمالونات وخزانات حسب الطلب", provider: "مصنع الصقر للصناعات المعدنية", accType: "مصنع", mainCat: "المصانع والتوريدات", subCat: "التصنيع حسب الطلب", item: "تصنيع هياكل معدنية", price: "بالطن شاملاً التركيب", location: "برج العرب / أكتوبر" },
+            { id: 12, title: "تريلات ولوابد لنقل الحديد والأسمنت والمعدات الثقيلة", provider: "البرق للنقل واللوجستيات", accType: "شركة", mainCat: "النقل واللوجستيات", subCat: "نقل مواد البناء", item: "نقل حديد", price: "بالرحلة أو بالطن", location: "جميع المحافظات" },
+            { id: 13, title: "معلم محارة ومبلط سيراميك وبورسلين بالليزر", provider: "الأسطى محمود عبد الرحمن وفريقه", accType: "فني", mainCat: "الفنيون والصيانة", subCat: "فنيون في أعمال البناء", item: "مبلط", price: "بالمتر المربع", location: "المنيا وأسيوط والقاهرة" },
+            { id: 14, title: "مخازن وأراضٍ صناعية مرخصة للبيع والإيجار", provider: "إعمار العقارية الصناعية", accType: "شركة", mainCat: "العقارات والأراضي", subCat: "عقارات صناعية ومخازن", item: "مخازن", price: "تسهيلات في السداد", location: "المنطقة الصناعية" }
+        ];
+
+        let requestsData = [
+            { id: 501, title: "مطلوب توريد 80 طن حديد تسليح (أقطار 12 و 16 مم)", requester: "شركة الأفق للمقاولات", mainCat: "مواد البناء", subCat: "حديد ومعادن البناء", item: "حديد تسليح", qty: "80 طن", location: "المنيا الجديدة", time: "منذ ساعة", details: "مطلوب عرض سعر شامل النقل والتنزيل بأرض الموقع، الدفع بشيك مصرفي مقبول الدفع عند الاستلام.", quotesCount: 6 },
+            { id: 502, title: "مطلوب مقاول باطن لأعمال محارة ودهانات واجهات برج سكني", requester: "م. كريم عادل - مدير مشروع", mainCat: "المقاولات والتنفيذ", subCat: "مقاولات التشطيبات", item: "تشطيب واجهات", qty: "3,200 م2", location: "التجمع الخامس", time: "منذ 3 ساعات", details: "شامل السقالات والمعدات، يرجى إرسال سابقة الأعمال وأسعار المتر مصنعيات أو بالمون.", quotesCount: 11 },
+            { id: 503, title: "مطلوب تأجير حفار كاتربيلر + 2 قلاب لمدة شهر", requester: "مؤسسة الوادي للإنشاءات", mainCat: "المعدات والآلات", subCat: "بيع وتأجير المعدات", item: "تأجير معدات بالشهر", qty: "شهر قابل للتجديد", location: "العلمين الجديدة", time: "منذ 5 ساعات", details: "العمل 8 ساعات يومياً شاملاً السائق والصيانة الدورية.", quotesCount: 4 },
+            { id: 504, title: "مطلوب مكتب مساحي لتوقيع محاور ومناسيب قطعة أرض مصنع", requester: "مصنع النور للبلاستيك", mainCat: "الهندسة والاستشارات", subCat: "المساحة والأعمال الجيولوجية", item: "توقيع محاور ومناسيب", qty: "مساحة 5000 م2", location: "العاشر من رمضان", time: "منذ يوم", details: "مطلوب جهاز Total Station وتسليم لوحة الإحداثيات معتمدة.", quotesCount: 8 }
+        ];
+
+        let jobsData = [
+            { id: 701, mode: "vacancies", title: "مطلوب مهندس تنفيذ مدني (خبرة 5 سنوات)", entity: "شركة المعالي للمقاولات العامة", location: "القاهرة الجديدة - دوام كامل", category: "الهندسة الإنشائية والمدنية", desc: "خبرة في استلام أعمال الحدادة والنجارة المسلحة وصب الخرسانات وإدارة المستخلصات بالموقع.", time: "منذ 3 ساعات" },
+            { id: 702, mode: "vacancies", title: "مطلوب فني كهرباء لوحات تحكم وصيانة مصانع", entity: "المجموعة الهندسية للكهرباء", location: "6 أكتوبر - راتب مجزي + سكن", category: "الكهرباء والطاقة", desc: "إجادة تجميع لوحات الكنترول وقراءة المخططات الكهربائية وصيانة المحركات.", time: "منذ يوم" },
+            { id: 703, mode: "seekers", title: "مهندس معماري ومصمم داخلي (Revit / 3Ds Max)", entity: "م. عمر خالد", location: "متاح للعمل بالمواقع أو عن بعد", category: "الهندسة المعمارية", desc: "خبرة 4 سنوات في إعداد الرسومات التنفيذية وتصميم الواجهات والديكور الداخلي وحصر الكميات.", time: "منذ ساعتين" },
+            { id: 704, mode: "seekers", title: "فني سباكة تأسيس وتشطيب شبكات مياه وصرف وحريق", entity: "الأسطى حسن الششتاوي", location: "الجيزة والقاهرة", category: "فنيون في السباكة", desc: "خبرة 12 عاماً في تأسيس العمارات والفيلات وتركيب الطلمبات والخزانات وكشف التسربات.", time: "منذ 6 ساعات" }
+        ];
+
+        let conversationsData = [
+            {
+                id: 1,
+                name: "م. كريم عادل (شركة الأفق للمقاولات)",
+                role: "مدير مشتريات ومشروعات",
+                lastMsg: "بانتظار عرض السعر النهائي لتوريد الـ 80 طن حديد تسليح",
+                time: "10:45 ص",
+                messages: [
+                    { sender: "them", text: "السلام عليكم، شاهدت ملف شركة البنيان في قسم مواد البناء - حديد تسليح.", time: "10:30 ص" },
+                    { sender: "me", text: "وعليكم السلام ورحمة الله يا باشمهندس كريم، أهلاً بحضرتك.", time: "10:35 ص" },
+                    { sender: "them", text: "بانتظار عرض السعر النهائي لتوريد الـ 80 طن حديد تسليح لموقع المنيا الجديدة.", time: "10:45 ص" }
+                ]
+            },
+            {
+                id: 2,
+                name: "محطة النيل للخرسانة الجاهزة",
+                role: "مصنع خرسانة",
+                lastMsg: "تم تأكيد حجز المضخة ليوم السبت القادم بالموقع.",
+                time: "أمس",
+                messages: [
+                    { sender: "me", text: "نحتاج 250 متر مكعب خرسانة جهد 350 مع مضخة طول 42 متر.", time: "أمس" },
+                    { sender: "them", text: "تم تأكيد حجز المضخة ليوم السبت القادم بالموقع.", time: "أمس" }
+                ]
+            },
+            {
+                id: 3,
+                name: "الأسطى محمود عبد الرحمن",
+                role: "فني مبلط ومحار",
+                lastMsg: "جاهز لمعاينة الشقق غداً إن شاء الله.",
+                time: "منذ يومين",
+                messages: [
+                    { sender: "them", text: "جاهز لمعاينة الشقق غداً إن شاء الله.", time: "منذ يومين" }
+                ]
+            }
+        ];
+
+        /* -----------------------------------------------------------------
+           3. INITIALIZATION & NAVIGATION LOGIC
+           ----------------------------------------------------------------- */
+        window.addEventListener('DOMContentLoaded', () => {
+            initApp();
+        });
+
+        function initApp() {
+            populateCategoryDropdowns();
+            renderHomeQuickCategories();
+            renderFeed('all');
+            renderHomeRfqWidget();
+            renderMainCategoriesGrid();
+            selectMainCategory(0);
+            renderRequestsList();
+            renderJobsList();
+            renderConversations();
+            renderProfileView();
+            initOnboardingWizard();
+        }
+
+        function switchTab(tabId) {
+            currentState.activeTab = tabId;
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
+
+            // Update Desktop Nav
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-amber-400', 'bg-slate-800/90');
+                btn.classList.add('text-slate-300');
+            });
+            const activeDeskBtn = document.getElementById(`nav-${tabId}`);
+            if (activeDeskBtn) {
+                activeDeskBtn.classList.add('text-amber-400', 'bg-slate-800/90');
+                activeDeskBtn.classList.remove('text-slate-300');
+            }
+
+            // Update Mobile Nav
+            document.querySelectorAll('.mnav-btn').forEach(btn => {
+                btn.classList.remove('text-amber-400');
+                btn.classList.add('text-slate-400');
+            });
+            const activeMobBtn = document.getElementById(`mnav-${tabId}`);
+            if (activeMobBtn) {
+                activeMobBtn.classList.add('text-amber-400');
+                activeMobBtn.classList.remove('text-slate-400');
+            }
+
+            if (tabId === 'messages') {
+                const badge = document.getElementById('unreadBadge');
+                if (badge) badge.classList.add('hidden');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotice');
+            document.getElementById('toastMessage').textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3500);
+        }
+
+        /* -----------------------------------------------------------------
+           4. VIEW 2: PROGRESSIVE 12-CATEGORY EXPLORER LOGIC
+           ----------------------------------------------------------------- */
+        function renderMainCategoriesGrid() {
+            const grid = document.getElementById('mainCategoriesGrid');
+            grid.innerHTML = TAXONOMY_DATA.map((cat, idx) => {
+                const isSelected = idx === currentState.selectedMainCatIndex;
+                return `
+                    <button onclick="selectMainCategory(${idx})" class="text-right p-3 rounded-xl border-2 transition flex flex-col justify-between h-24 ${isSelected ? 'border-amber-500 bg-amber-50/90 shadow-sm' : 'border-slate-200 hover:border-slate-300 bg-slate-50/50'}">
+                        <div class="flex items-center justify-between w-full">
+                            <div class="w-8 h-8 rounded-lg ${isSelected ? 'bg-amber-500 text-slate-950' : 'bg-slate-200 text-slate-700'} flex items-center justify-center text-sm">
+                                <i class="fa-solid ${cat.icon}"></i>
+                            </div>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${isSelected ? 'bg-slate-900 text-amber-400' : 'bg-slate-200 text-slate-600'}">${idx + 1}</span>
+                        </div>
+                        <div class="mt-2">
+                            <p class="font-extrabold text-xs sm:text-sm text-slate-900 line-clamp-1">${cat.name}</p>
+                            <p class="text-[10px] text-slate-500">${cat.subcategories.length} أقسام فرعية</p>
+                        </div>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectMainCategory(catIdx) {
+            currentState.selectedMainCatIndex = catIdx;
+            currentState.selectedSubCatIndex = 0;
+            currentState.selectedExactItem = null;
+
+            const cat = TAXONOMY_DATA[catIdx];
+            document.getElementById('selectedMainCatLabel').textContent = `القسم المختار: ${cat.name}`;
+
+            // Show contextual note if present (Categories 5, 9, 11)
+            const noteBox = document.getElementById('categoryContextNote');
+            const noteText = document.getElementById('categoryContextNoteText');
+            if (cat.note) {
+                noteBox.classList.remove('hidden');
+                noteBox.className = "rounded-2xl p-4 border flex items-start gap-3 bg-amber-50 border-amber-300 text-amber-950";
+                noteText.innerHTML = `<strong>تنبيه تنظيمي خاص بـ (${cat.name}):</strong> ${cat.note}`;
+            } else {
+                noteBox.classList.add('hidden');
+            }
+
+            renderMainCategoriesGrid();
+            renderSubCategoriesList();
+            renderExactItemsAndListings();
+        }
+
+        function renderSubCategoriesList() {
+            const cat = TAXONOMY_DATA[currentState.selectedMainCatIndex];
+            const container = document.getElementById('subCategoriesList');
+
+            container.innerHTML = cat.subcategories.map((sub, sIdx) => {
+                const isSelected = sIdx === currentState.selectedSubCatIndex;
+                return `
+                    <button onclick="selectSubCategory(${sIdx})" class="w-full text-right px-3.5 py-2.5 rounded-xl border transition flex items-center justify-between ${isSelected ? 'bg-slate-900 text-white border-slate-900 font-bold shadow-sm' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200 font-semibold'}">
+                        <span class="text-xs sm:text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-folder-open ${isSelected ? 'text-amber-400' : 'text-slate-400'}"></i>
+                            ${sub.name}
+                        </span>
+                        <span class="text-[11px] px-2 py-0.5 rounded-full ${isSelected ? 'bg-amber-500 text-slate-950 font-extrabold' : 'bg-slate-200 text-slate-600'}">${sub.items.length}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectSubCategory(subIdx) {
+            currentState.selectedSubCatIndex = subIdx;
+            currentState.selectedExactItem = null;
+            renderSubCategoriesList();
+            renderExactItemsAndListings();
+        }
+
+        function selectExactItem(itemName) {
+            if (currentState.selectedExactItem === itemName) {
+                currentState.selectedExactItem = null;
+            } else {
+                currentState.selectedExactItem = itemName;
+            }
+            renderExactItemsAndListings();
+        }
+
+        function resetItemFilter() {
+            currentState.selectedExactItem = null;
+            renderExactItemsAndListings();
+        }
+
+        function renderExactItemsAndListings() {
+            const cat = TAXONOMY_DATA[currentState.selectedMainCatIndex];
+            const sub = cat.subcategories[currentState.selectedSubCatIndex];
+
+            // Update Breadcrumb
+            const breadcrumb = document.getElementById('progressiveBreadcrumb');
+            breadcrumb.innerHTML = `
+                <span class="font-bold text-slate-900">${cat.name}</span>
+                <i class="fa-solid fa-chevron-left text-[10px] text-slate-400"></i>
+                <span class="font-bold text-amber-700">${sub.name}</span>
+                ${currentState.selectedExactItem ? `
+                    <i class="fa-solid fa-chevron-left text-[10px] text-slate-400"></i>
+                    <span class="bg-emerald-600 text-white px-2.5 py-0.5 rounded-md font-bold">${currentState.selectedExactItem}</span>
+                ` : '<span class="text-slate-400 text-[11px] mr-1">(اختر تخصصاً دقيقاً بالأسفل)</span>'}
+            `;
+
+            const resetBtn = document.getElementById('resetItemFilterBtn');
+            if (currentState.selectedExactItem) {
+                resetBtn.classList.remove('hidden');
+            } else {
+                resetBtn.classList.add('hidden');
+            }
+
+            // Render Chips for Step 3
+            const chipsContainer = document.getElementById('exactItemsChips');
+            chipsContainer.innerHTML = sub.items.map(item => {
+                const active = currentState.selectedExactItem === item;
+                return `
+                    <button onclick="selectExactItem('${item}')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 border ${active ? 'bg-emerald-600 text-white border-emerald-600 font-extrabold shadow-sm' : 'bg-slate-50 hover:bg-amber-50 text-slate-800 border-slate-200 font-semibold'}">
+                        <i class="fa-solid ${active ? 'fa-circle-check' : 'fa-tag text-amber-500'} text-xs"></i>
+                        <span>${item}</span>
+                    </button>
+                `;
+            }).join('');
+
+            // Filter Marketplace Listings
+            let filtered = catalogListings.filter(item => item.mainCat === cat.name);
+            if (currentState.selectedExactItem) {
+                const exactMatches = filtered.filter(i => i.item === currentState.selectedExactItem);
+                filtered = exactMatches.length > 0 ? exactMatches : filtered;
+            }
+
+            document.getElementById('catalogMatchCount').textContent = filtered.length;
+            const listingsGrid = document.getElementById('catalogListingsGrid');
+
+            if (filtered.length === 0) {
+                listingsGrid.innerHTML = `
+                    <div class="col-span-2 text-center py-8 bg-slate-50 rounded-xl border border-dashed border-slate-300">
+                        <p class="text-sm font-bold text-slate-700">لا توجد عروض مسجلة حالياً في هذا البند الدقيق</p>
+                        <p class="text-xs text-slate-500 mt-1">كن أول من يضيف منتجاً/خدمة أو اطلب عرض سعر من الموردين</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listingsGrid.innerHTML = filtered.map(card => `
+                <div class="border border-slate-200 rounded-2xl p-4 hover:border-amber-400 transition bg-slate-50/40 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-2">
+                            <span class="bg-amber-100 text-amber-900 text-[11px] font-bold px-2.5 py-0.5 rounded-md">${card.item}</span>
+                            <span class="bg-slate-200 text-slate-700 text-[11px] font-bold px-2 py-0.5 rounded">${card.accType}</span>
+                        </div>
+                        <h4 class="font-extrabold text-sm text-slate-900">${card.title}</h4>
+                        <p class="text-xs text-slate-600 mt-1 flex items-center gap-1">
+                            <i class="fa-solid fa-building-user text-slate-400"></i>
+                            <span>${card.provider}</span>
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between text-xs">
+                        <div>
+                            <span class="text-emerald-700 font-bold block">${card.price}</span>
+                            <span class="text-slate-400 text-[11px]"><i class="fa-solid fa-location-dot ml-1"></i>${card.location}</span>
+                        </div>
+                        <button onclick="startChatWith('${card.provider}')" class="bg-slate-900 hover:bg-slate-800 text-white px-3 py-1.5 rounded-lg font-bold text-xs flex items-center gap-1.5 transition">
+                            <i class="fa-solid fa-comment-dots text-amber-400"></i>
+                            <span>تواصل</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function searchInTaxonomy(query) {
+            const box = document.getElementById('taxonomySearchResultsBox');
+            const list = document.getElementById('taxonomySearchResultsList');
+            const q = query.trim();
+            if (!q) {
+                box.classList.add('hidden');
+                return;
+            }
+
+            let matches = [];
+            TAXONOMY_DATA.forEach((cat, cIdx) => {
+                cat.subcategories.forEach((sub, sIdx) => {
+                    sub.items.forEach(item => {
+                        if (item.includes(q) || sub.name.includes(q) || cat.name.includes(q)) {
+                            matches.push({ cIdx, sIdx, item, catName: cat.name, subName: sub.name });
+                        }
+                    });
+                });
+            });
+
+            box.classList.remove('hidden');
+            if (matches.length === 0) {
+                list.innerHTML = `<span class="text-xs text-slate-600">لا توجد بنود مطابقة لـ "${q}"</span>`;
+                return;
+            }
+
+            list.innerHTML = matches.slice(0, 12).map(m => `
+                <button onclick="jumpToTaxonomyItem(${m.cIdx}, ${m.sIdx}, '${m.item}')" class="bg-white hover:bg-amber-500 hover:text-slate-950 text-slate-800 border border-amber-300 rounded-xl px-3 py-1.5 text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                    <span>${m.catName}</span>
+                    <i class="fa-solid fa-angle-left text-[10px] opacity-60"></i>
+                    <span>${m.subName}</span>
+                    <i class="fa-solid fa-angle-left text-[10px] opacity-60"></i>
+                    <span class="underline">${m.item}</span>
+                </button>
+            `).join('');
+        }
+
+        function jumpToTaxonomyItem(cIdx, sIdx, itemName) {
+            currentState.selectedMainCatIndex = cIdx;
+            currentState.selectedSubCatIndex = sIdx;
+            currentState.selectedExactItem = itemName;
+            document.getElementById('taxonomySearchResultsBox').classList.add('hidden');
+            document.getElementById('taxonomySearchInput').value = '';
+            renderMainCategoriesGrid();
+            renderSubCategoriesList();
+            renderExactItemsAndListings();
+        }
+
+        function clearTaxonomySearch() {
+            document.getElementById('taxonomySearchInput').value = '';
+            document.getElementById('taxonomySearchResultsBox').classList.add('hidden');
+        }
+
+        function handleGlobalSearch(val) {
+            if (val.trim().length > 1) {
+                switchTab('catalog');
+                document.getElementById('taxonomySearchInput').value = val;
+                searchInTaxonomy(val);
+            }
+        }
+
+        /* -----------------------------------------------------------------
+           5. VIEW 1: HOME FEED & SIDEBAR WIDGETS
+           ----------------------------------------------------------------- */
+        function renderHomeQuickCategories() {
+            const container = document.getElementById('homeQuickCategories');
+            container.innerHTML = TAXONOMY_DATA.map((cat, idx) => `
+                <button onclick="switchTab('catalog'); selectMainCategory(${idx});" class="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-amber-50 text-right transition group">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-lg bg-slate-100 group-hover:bg-amber-500 group-hover:text-slate-950 text-slate-700 flex items-center justify-center text-xs transition">
+                            <i class="fa-solid ${cat.icon}"></i>
+                        </div>
+                        <span class="text-xs font-bold text-slate-800">${idx + 1}. ${cat.name}</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-left text-[10px] text-slate-400"></i>
+                </button>
+            `).join('');
+        }
+
+        function renderFeed(filterCategory) {
+            const container = document.getElementById('feedContainer');
+            const filtered = filterCategory === 'all'
+                ? postsData
+                : postsData.filter(p => p.category === filterCategory);
+
+            container.innerHTML = filtered.map(post => `
+                <article class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-xl bg-slate-900 text-amber-400 flex items-center justify-center font-bold text-base">
+                                <i class="fa-solid fa-helmet-safety"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-900">${post.author}</h4>
+                                <div class="flex flex-wrap items-center gap-1.5 text-[11px] text-slate-500 mt-0.5">
+                                    <span class="font-semibold text-slate-700">${post.role}</span>
+                                    <span>•</span>
+                                    <span class="text-amber-700 font-bold">${post.category} (${post.spec})</span>
+                                    <span>•</span>
+                                    <span>${post.time}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="bg-amber-50 text-amber-800 border border-amber-200 text-[11px] font-bold px-2.5 py-0.5 rounded-full shrink-0">${post.badge}</span>
+                    </div>
+
+                    <p class="text-sm text-slate-800 leading-relaxed mt-3.5">${post.content}</p>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
+                        <div class="flex items-center gap-4">
+                            <button onclick="toggleLikePost(${post.id})" class="flex items-center gap-1.5 font-bold ${post.liked ? 'text-amber-600' : 'hover:text-slate-900'}">
+                                <i class="fa-solid fa-thumbs-up"></i>
+                                <span>إعجاب (${post.likes})</span>
+                            </button>
+                            <button onclick="startChatWith('${post.author}')" class="flex items-center gap-1.5 font-bold hover:text-slate-900">
+                                <i class="fa-solid fa-comment-dots text-sky-600"></i>
+                                <span>مراسلة مباشرة</span>
+                            </button>
+                        </div>
+                        <button onclick="switchTab('catalog')" class="text-[11px] text-slate-500 hover:text-amber-700 font-semibold">
+                            تصفح قسم ${post.category} ←
+                        </button>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function filterFeed(cat) {
+            renderFeed(cat);
+        }
+
+        function toggleLikePost(id) {
+            const p = postsData.find(x => x.id === id);
+            if (p) {
+                p.liked = !p.liked;
+                p.likes += p.liked ? 1 : -1;
+                renderFeed('all');
+            }
+        }
+
+        function createNewPost() {
+            const contentEl = document.getElementById('newPostContent');
+            const categoryEl = document.getElementById('newPostCategory');
+            const typeEl = document.getElementById('newPostType');
+            const text = contentEl.value.trim();
+            if (!text) {
+                showToast("يرجى كتابة محتوى المنشور أولاً");
+                return;
+            }
+
+            postsData.unshift({
+                id: Date.now(),
+                author: currentState.userProfile.name,
+                role: currentState.userProfile.accountType,
+                category: categoryEl.value,
+                spec: currentState.userProfile.exactItem,
+                badge: typeEl.value,
+                time: "الآن",
+                content: text,
+                likes: 1,
+                comments: 0,
+                liked: true
+            });
+
+            contentEl.value = '';
+            renderFeed('all');
+            renderProfileView();
+            showToast("تم نشر منشورك في الصفحة الرئيسية بنجاح");
+        }
+
+        function renderHomeRfqWidget() {
+            const widget = document.getElementById('homeRfqWidget');
+            widget.innerHTML = requestsData.slice(0, 3).map(req => `
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-amber-400 transition">
+                    <span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">${req.item}</span>
+                    <h4 class="font-bold text-xs text-slate-900 mt-1.5 line-clamp-1">${req.title}</h4>
+                    <div class="flex items-center justify-between text-[11px] text-slate-500 mt-2">
+                        <span><i class="fa-solid fa-location-dot text-amber-500 ml-1"></i>${req.location}</span>
+                        <button onclick="switchTab('requests')" class="text-amber-700 font-bold hover:underline">تقديم عرض</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* -----------------------------------------------------------------
+           6. VIEW 3: REQUESTS (RFQs) MARKETPLACE
+           ----------------------------------------------------------------- */
+        function renderRequestsList() {
+            const filterVal = document.getElementById('rfqCategoryFilter').value;
+            const list = filterVal === 'all'
+                ? requestsData
+                : requestsData.filter(r => r.mainCat === filterVal);
+
+            document.getElementById('rfqCountBadge').textContent = list.length;
+            const container = document.getElementById('requestsListContainer');
+
+            container.innerHTML = list.map(req => `
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <div class="flex items-center gap-1.5 text-xs">
+                                <span class="bg-slate-900 text-amber-400 font-bold px-2.5 py-0.5 rounded-lg">${req.mainCat}</span>
+                                <i class="fa-solid fa-angle-left text-slate-400 text-[10px]"></i>
+                                <span class="bg-emerald-100 text-emerald-900 font-bold px-2.5 py-0.5 rounded-lg">${req.item}</span>
+                            </div>
+                            <span class="text-[11px] text-slate-400">${req.time}</span>
+                        </div>
+                        <h3 class="font-extrabold text-base text-slate-900">${req.title}</h3>
+                        <p class="text-xs text-slate-600 mt-2 leading-relaxed">${req.details}</p>
+
+                        <div class="mt-4 grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs">
+                            <div><span class="text-slate-400">الكمية/النطاق:</span> <strong class="text-slate-800">${req.qty}</strong></div>
+                            <div><span class="text-slate-400">الموقع:</span> <strong class="text-slate-800">${req.location}</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <div class="text-xs text-slate-500">
+                            العميل: <strong class="text-slate-800">${req.requester}</strong>
+                            <span class="mr-2 text-emerald-700 font-bold">(${req.quotesCount} عروض مقدمة)</span>
+                        </div>
+                        <button onclick="startChatWith('${req.requester}', 'عرض سعر بخصوص: ${req.title}')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 transition">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>تقديم عرض سعر</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* -----------------------------------------------------------------
+           7. VIEW 4: JOBS & WORKPORTAL
+           ----------------------------------------------------------------- */
+        function switchJobSubTab(mode) {
+            currentState.jobSubTab = mode;
+            const tabVac = document.getElementById('jobTab-vacancies');
+            const tabSeek = document.getElementById('jobTab-seekers');
+
+            if (mode === 'vacancies') {
+                tabVac.className = "pb-3 px-2 font-bold text-sm border-b-2 border-amber-500 text-slate-900 flex items-center gap-2";
+                tabSeek.className = "pb-3 px-2 font-bold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2";
+            } else {
+                tabSeek.className = "pb-3 px-2 font-bold text-sm border-b-2 border-amber-500 text-slate-900 flex items-center gap-2";
+                tabVac.className = "pb-3 px-2 font-bold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2";
+            }
+            renderJobsList();
+        }
+
+        function renderJobsList() {
+            const container = document.getElementById('jobsListContainer');
+            const list = jobsData.filter(j => j.mode === currentState.jobSubTab);
+
+            container.innerHTML = list.map(job => `
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-2">
+                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full ${job.mode === 'vacancies' ? 'bg-amber-100 text-amber-900' : 'bg-sky-100 text-sky-900'}">
+                                ${job.mode === 'vacancies' ? 'وظيفة شاغرة بالشركة' : 'باحث عن عمل / متاح للتعاقد'}
+                            </span>
+                            <span class="text-[11px] text-slate-400">${job.time}</span>
+                        </div>
+                        <h3 class="font-extrabold text-base text-slate-900 mt-1">${job.title}</h3>
+                        <p class="text-xs font-bold text-slate-600 mt-1">${job.entity} • <span class="text-amber-700">${job.location}</span></p>
+                        <p class="text-xs text-slate-600 mt-3 leading-relaxed">${job.desc}</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-[11px] bg-slate-100 text-slate-700 px-2.5 py-1 rounded font-semibold">${job.category}</span>
+                        <button onclick="startChatWith('${job.entity}', 'بخصوص إعلان الوظيفة: ${job.title}')" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5">
+                            <i class="fa-solid fa-envelope text-amber-400"></i>
+                            <span>${job.mode === 'vacancies' ? 'التقديم ومراسلة الشركة' : 'التواصل مع المهندس/الفني'}</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* -----------------------------------------------------------------
+           8. VIEW 5: DIRECT MESSAGES
+           ----------------------------------------------------------------- */
+        function renderConversations() {
+            const listEl = document.getElementById('conversationsList');
+            listEl.innerHTML = conversationsData.map(conv => {
+                const active = conv.id === currentState.activeChatId;
+                return `
+                    <button onclick="selectConversation(${conv.id})" class="w-full text-right p-3.5 transition flex items-start gap-3 ${active ? 'bg-amber-50/90 border-r-4 border-amber-500' : 'hover:bg-slate-50'}">
+                        <div class="w-10 h-10 rounded-xl bg-slate-900 text-amber-400 flex items-center justify-center font-bold shrink-0 text-sm">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-bold text-xs sm:text-sm text-slate-900 truncate">${conv.name}</h4>
+                                <span class="text-[10px] text-slate-400">${conv.time}</span>
+                            </div>
+                            <p class="text-[11px] text-amber-700 font-semibold">${conv.role}</p>
+                            <p class="text-xs text-slate-500 truncate mt-0.5">${conv.lastMsg}</p>
+                        </div>
+                    </button>
+                `;
+            }).join('');
+
+            renderActiveChat();
+        }
+
+        function selectConversation(id) {
+            currentState.activeChatId = id;
+            renderConversations();
+        }
+
+        function renderActiveChat() {
+            const conv = conversationsData.find(c => c.id === currentState.activeChatId) || conversationsData[0];
+            document.getElementById('activeChatHeader').innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-slate-900 text-amber-400 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-sm text-slate-900">${conv.name}</h3>
+                        <p class="text-xs text-emerald-600 font-semibold">● متصل الآن - ${conv.role}</p>
+                    </div>
+                </div>
+            `;
+
+            const msgContainer = document.getElementById('activeChatMessages');
+            msgContainer.innerHTML = conv.messages.map(m => `
+                <div class="flex ${m.sender === 'me' ? 'justify-start' : 'justify-end'}">
+                    <div class="max-w-md rounded-2xl px-4 py-2.5 text-xs sm:text-sm ${m.sender === 'me' ? 'bg-slate-900 text-white rounded-tr-none' : 'bg-white border border-slate-200 text-slate-800 rounded-tl-none shadow-sm'}">
+                        <p>${m.text}</p>
+                        <span class="block text-[10px] mt-1 opacity-60">${m.time}</span>
+                    </div>
+                </div>
+            `).join('');
+            msgContainer.scrollTop = msgContainer.scrollHeight;
+        }
+
+        function handleSendMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('chatMessageInput');
+            const text = input.value.trim();
+            if (!text) return;
+            pushMessageToActiveChat(text);
+            input.value = '';
+        }
+
+        function sendQuickReply(text) {
+            pushMessageToActiveChat(text);
+        }
+
+        function pushMessageToActiveChat(text) {
+            const conv = conversationsData.find(c => c.id === currentState.activeChatId);
+            if (conv) {
+                conv.messages.push({ sender: 'me', text: text, time: 'الآن' });
+                conv.lastMsg = text;
+                conv.time = 'الآن';
+                renderConversations();
+            }
+        }
+
+        function startChatWith(partnerName, initialMessage = null) {
+            let existing = conversationsData.find(c => c.name.includes(partnerName));
+            if (!existing) {
+                existing = {
+                    id: Date.now(),
+                    name: partnerName,
+                    role: "عضو بشبكة بناء تك",
+                    lastMsg: initialMessage || "بدء محادثة جديدة",
+                    time: "الآن",
+                    messages: [
+                        { sender: "me", text: initialMessage || `مرحباً ${partnerName}، أتواصل معك عبر منصة بناء تك.`, time: "الآن" }
+                    ]
+                };
+                conversationsData.unshift(existing);
+            } else if (initialMessage) {
+                existing.messages.push({ sender: "me", text: initialMessage, time: "الآن" });
+                existing.lastMsg = initialMessage;
+            }
+            currentState.activeChatId = existing.id;
+            switchTab('messages');
+            renderConversations();
+        }
+
+        /* -----------------------------------------------------------------
+           9. VIEW 6: PROFILE & PROGRESSIVE ONBOARDING WIZARD
+           ----------------------------------------------------------------- */
+        function renderProfileView() {
+            const u = currentState.userProfile;
+            // Sidebar updates
+            document.getElementById('sidebarUserName').innerHTML = `${u.name} <i class="fa-solid fa-circle-check text-sky-500 text-sm"></i>`;
+            document.getElementById('sidebarAccTypeBadge').textContent = u.accountType;
+            document.getElementById('sidebarUserHeadline').textContent = `${u.accountType} متخصص في ${u.mainCat} - ${u.exactItem}`;
+            document.getElementById('pathAccountType').textContent = u.accountType;
+            document.getElementById('pathMainCat').textContent = u.mainCat;
+            document.getElementById('pathSpec').textContent = u.exactItem;
+
+            // Profile page updates
+            document.getElementById('profileName').textContent = u.name;
+            document.getElementById('profileAccountBadge').textContent = u.accountType;
+            document.getElementById('profStep1').textContent = u.accountType;
+            document.getElementById('profStep2').textContent = u.mainCat;
+            document.getElementById('profStep3').textContent = u.subCat;
+            document.getElementById('profStep4').textContent = u.exactItem;
+
+            // Profile Products
+            const prodContainer = document.getElementById('profileProductsList');
+            const myProds = catalogListings.slice(0, 4);
+            prodContainer.innerHTML = myProds.map(p => `
+                <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/70">
+                    <span class="text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded">${p.item}</span>
+                    <h4 class="font-bold text-xs sm:text-sm text-slate-900 mt-1.5">${p.title}</h4>
+                    <p class="text-xs text-emerald-700 font-bold mt-1">${p.price}</p>
+                </div>
+            `).join('');
+
+            // Profile Posts
+            const postsList = document.getElementById('profilePostsList');
+            postsList.innerHTML = postsData.slice(0, 2).map(post => `
+                <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/50">
+                    <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
+                        <span class="text-amber-700 font-bold">${post.category}</span>
+                        <span>${post.time}</span>
+                    </div>
+                    <p class="text-xs text-slate-700 line-clamp-2">${post.content}</p>
+                </div>
+            `).join('');
+        }
+
+        function initOnboardingWizard() {
+            const accContainer = document.getElementById('wizAccountTypes');
+            accContainer.innerHTML = ACCOUNT_TYPES.map(type => {
+                const active = type === currentState.userProfile.accountType;
+                return `
+                    <button type="button" onclick="selectWizardAccountType('${type}')" class="wiz-acc-btn py-2 px-3 rounded-xl border text-xs font-bold transition ${active ? 'bg-slate-900 text-amber-400 border-slate-900' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'}">
+                        ${type}
+                    </button>
+                `;
+            }).join('');
+
+            const mainSel = document.getElementById('wizMainCategory');
+            mainSel.innerHTML = TAXONOMY_DATA.map((cat, idx) => `<option value="${idx}">${idx + 1}. ${cat.name}</option>`).join('');
+            updateWizardSubcategories();
+        }
+
+        function selectWizardAccountType(type) {
+            currentState.userProfile.accountType = type;
+            initOnboardingWizard();
+        }
+
+        function updateWizardSubcategories() {
+            const cIdx = parseInt(document.getElementById('wizMainCategory').value) || 0;
+            const subSel = document.getElementById('wizSubCategory');
+            const subs = TAXONOMY_DATA[cIdx].subcategories;
+            subSel.innerHTML = subs.map((s, idx) => `<option value="${idx}">${s.name}</option>`).join('');
+            updateWizardItems();
+        }
+
+        function updateWizardItems() {
+            const cIdx = parseInt(document.getElementById('wizMainCategory').value) || 0;
+            const sIdx = parseInt(document.getElementById('wizSubCategory').value) || 0;
+            const itemSel = document.getElementById('wizExactItem');
+            const items = TAXONOMY_DATA[cIdx].subcategories[sIdx].items;
+            itemSel.innerHTML = items.map(i => `<option value="${i}">${i}</option>`).join('');
+        }
+
+        function openOnboardingModal() {
+            document.getElementById('onboardingModal').classList.remove('hidden');
+        }
+
+        function closeOnboardingModal() {
+            document.getElementById('onboardingModal').classList.add('hidden');
+        }
+
+        function saveOnboardingWizard() {
+            const nameVal = document.getElementById('wizUserName').value.trim() || "مستخدم بناء تك";
+            const cIdx = parseInt(document.getElementById('wizMainCategory').value) || 0;
+            const sIdx = parseInt(document.getElementById('wizSubCategory').value) || 0;
+            const exactVal = document.getElementById('wizExactItem').value;
+
+            currentState.userProfile.name = nameVal;
+            currentState.userProfile.mainCat = TAXONOMY_DATA[cIdx].name;
+            currentState.userProfile.subCat = TAXONOMY_DATA[cIdx].subcategories[sIdx].name;
+            currentState.userProfile.exactItem = exactVal;
+
+            renderProfileView();
+            closeOnboardingModal();
+            showToast(`تم تحديث الحساب تدريجياً: ${currentState.userProfile.accountType} > ${currentState.userProfile.mainCat} > ${exactVal}`);
+        }
+
+        /* -----------------------------------------------------------------
+           10. MODALS FOR ADDING PRODUCT, REQUEST, AND JOB
+           ----------------------------------------------------------------- */
+        function populateCategoryDropdowns() {
+            const postCat = document.getElementById('newPostCategory');
+            const rfqFilter = document.getElementById('rfqCategoryFilter');
+            const prodMain = document.getElementById('prodMainCat');
+            const reqMain = document.getElementById('reqMainCat');
+
+            const optionsHtml = TAXONOMY_DATA.map((cat, idx) => `<option value="${cat.name}">${idx + 1}. ${cat.name}</option>`).join('');
+            const indexedOptionsHtml = TAXONOMY_DATA.map((cat, idx) => `<option value="${idx}">${idx + 1}. ${cat.name}</option>`).join('');
+
+            postCat.innerHTML = optionsHtml;
+            rfqFilter.innerHTML = `<option value="all">جميع الأقسام الـ 12</option>` + optionsHtml;
+            prodMain.innerHTML = indexedOptionsHtml;
+            reqMain.innerHTML = indexedOptionsHtml;
+
+            syncProdSubCat();
+            syncReqSubCat();
+        }
+
+        function syncProdSubCat() {
+            const cIdx = parseInt(document.getElementById('prodMainCat').value) || 0;
+            const subSel = document.getElementById('prodSubCat');
+            subSel.innerHTML = TAXONOMY_DATA[cIdx].subcategories.map((s, idx) => `<option value="${idx}">${s.name}</option>`).join('');
+            syncProdItem();
+        }
+
+        function syncProdItem() {
+            const cIdx = parseInt(document.getElementById('prodMainCat').value) || 0;
+            const sIdx = parseInt(document.getElementById('prodSubCat').value) || 0;
+            const itemSel = document.getElementById('prodItem');
+            itemSel.innerHTML = TAXONOMY_DATA[cIdx].subcategories[sIdx].items.map(i => `<option value="${i}">${i}</option>`).join('');
+        }
+
+        function openAddProductModal() {
+            document.getElementById('prodMainCat').value = currentState.selectedMainCatIndex;
+            syncProdSubCat();
+            document.getElementById('prodSubCat').value = currentState.selectedSubCatIndex;
+            syncProdItem();
+            document.getElementById('addProductModal').classList.remove('hidden');
+        }
+
+        function closeAddProductModal() {
+            document.getElementById('addProductModal').classList.add('hidden');
+        }
+
+        function submitNewProduct(e) {
+            e.preventDefault();
+            const cIdx = parseInt(document.getElementById('prodMainCat').value) || 0;
+            const sIdx = parseInt(document.getElementById('prodSubCat').value) || 0;
+            const itemVal = document.getElementById('prodItem').value;
+
+            catalogListings.unshift({
+                id: Date.now(),
+                title: document.getElementById('prodTitle').value,
+                provider: currentState.userProfile.name,
+                accType: currentState.userProfile.accountType,
+                mainCat: TAXONOMY_DATA[cIdx].name,
+                subCat: TAXONOMY_DATA[cIdx].subcategories[sIdx].name,
+                item: itemVal,
+                price: document.getElementById('prodPrice').value,
+                location: document.getElementById('prodLocation').value
+            });
+
+            closeAddProductModal();
+            selectMainCategory(cIdx);
+            selectSubCategory(sIdx);
+            selectExactItem(itemVal);
+            renderProfileView();
+            showToast("تمت إضافة المنتج / الخدمة في القسم المحدد بنجاح");
+        }
+
+        function syncReqSubCat() {
+            const cIdx = parseInt(document.getElementById('reqMainCat').value) || 0;
+            const subSel = document.getElementById('reqSubCat');
+            subSel.innerHTML = TAXONOMY_DATA[cIdx].subcategories.map((s, idx) => `<option value="${idx}">${s.name}</option>`).join('');
+            syncReqItem();
+        }
+
+        function syncReqItem() {
+            const cIdx = parseInt(document.getElementById('reqMainCat').value) || 0;
+            const sIdx = parseInt(document.getElementById('reqSubCat').value) || 0;
+            const itemSel = document.getElementById('reqItem');
+            itemSel.innerHTML = TAXONOMY_DATA[cIdx].subcategories[sIdx].items.map(i => `<option value="${i}">${i}</option>`).join('');
+        }
+
+        function openNewRequestModal() {
+            document.getElementById('newRequestModal').classList.remove('hidden');
+        }
+
+        function openNewRequestModalWithPreselect() {
+            document.getElementById('reqMainCat').value = currentState.selectedMainCatIndex;
+            syncReqSubCat();
+            document.getElementById('reqSubCat').value = currentState.selectedSubCatIndex;
+            syncReqItem();
+            if (currentState.selectedExactItem) {
+                document.getElementById('reqItem').value = currentState.selectedExactItem;
+            }
+            document.getElementById('newRequestModal').classList.remove('hidden');
+        }
+
+        function closeNewRequestModal() {
+            document.getElementById('newRequestModal').classList.add('hidden');
+        }
+
+        function submitNewRequest(e) {
+            e.preventDefault();
+            const cIdx = parseInt(document.getElementById('reqMainCat').value) || 0;
+            const sIdx = parseInt(document.getElementById('reqSubCat').value) || 0;
+            const itemVal = document.getElementById('reqItem').value;
+
+            requestsData.unshift({
+                id: Date.now(),
+                title: document.getElementById('reqTitle').value,
+                requester: currentState.userProfile.name,
+                mainCat: TAXONOMY_DATA[cIdx].name,
+                subCat: TAXONOMY_DATA[cIdx].subcategories[sIdx].name,
+                item: itemVal,
+                qty: document.getElementById('reqQty').value,
+                location: document.getElementById('reqLocation').value,
+                time: "الآن",
+                details: document.getElementById('reqDetails').value || "مطلوب عروض أسعار فورية من الموردين ومقدمي الخدمات المعتمدين.",
+                quotesCount: 0
+            });
+
+            closeNewRequestModal();
+            renderRequestsList();
+            renderHomeRfqWidget();
+            switchTab('requests');
+            showToast("تم نشر طلب التوريد/الخدمة وأصبح متاحاً للموردين");
+        }
+
+        function openJobModal(mode) {
+            document.getElementById('jobPostMode').value = mode === 'company' ? 'vacancies' : 'seekers';
+            document.getElementById('jobModalTitle').textContent = mode === 'company'
+                ? 'نشر وظيفة شاغرة (للشركات والمكاتب)'
+                : 'نشر طلب عمل (لمهندس / فني / عامل)';
+            document.getElementById('jobModal').classList.remove('hidden');
+        }
+
+        function closeJobModal() {
+            document.getElementById('jobModal').classList.add('hidden');
+        }
+
+        function submitJobPost(e) {
+            e.preventDefault();
+            const mode = document.getElementById('jobPostMode').value;
+            jobsData.unshift({
+                id: Date.now(),
+                mode: mode,
+                title: document.getElementById('jobTitleInput').value,
+                entity: document.getElementById('jobEntityInput').value,
+                location: document.getElementById('jobLocationInput').value,
+                category: currentState.userProfile.mainCat,
+                desc: document.getElementById('jobDescInput').value,
+                time: "الآن"
+            });
+
+            closeJobModal();
+            switchJobSubTab(mode);
+            showToast("تم نشر الإعلان في بوابة الوظائف وفرص العمل");
+        }
+    </script>
+</body>
+</html>
